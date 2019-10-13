@@ -1,6 +1,6 @@
 /*-------------------------- In the name of God ----------------------------*\
 
-    libprayertimes 1.0
+    libAzanTime 1.0
     Islamic prayer times calculator library
     Based on PrayTimes 1.1 JavaScript library
 
@@ -33,7 +33,7 @@ Calculating Formulas:
 http://praytimes.org/calculation
 
 Code Repository:
-http://code.ebrahim.ir/prayertimes/
+http://code.ebrahim.ir/AzanTime/
 
 \*--------------------------------------------------------------------------*/
 
@@ -41,9 +41,9 @@ http://code.ebrahim.ir/prayertimes/
 #include <cmath>
 #include <string>
 
-/* -------------------- PrayerTimes Class --------------------- */
+/* -------------------- AzanTime Class --------------------- */
 
-class PrayerTimes
+class AzanTime
 {
 public:
 	enum
@@ -98,7 +98,7 @@ public:
 
 /* -------------------- Interface Functions -------------------- */
 
-        PrayerTimes(CalculationMethod __calc_method = Jafari,
+        AzanTime(CalculationMethod __calc_method = Jafari,
             JuristicMethod __asr_juristic = Shafii,
             AdjustingMethod __adjust_high_lats = MidNight,
             double __dhuhr_minutes = double())
@@ -215,11 +215,13 @@ public:
 			return std::string();
 		int hours, minutes;
 		get_float_time_parts(time, hours, minutes);
-		return two_digits_format(hours) + ':' + two_digits_format(minutes);
+                return two_digits_format(hours) + ':' +
+                    two_digits_format(minutes);
 	}
 
 	/* convert float hours to 12h format */
-	static std::string float_time_to_time12(double time, bool no_suffix = false)
+        static std::string float_time_to_time12
+            (double time, bool no_suffix = false)
         {
                 if (std::isnan(time))
 			return std::string();
