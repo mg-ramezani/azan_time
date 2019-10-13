@@ -7,4 +7,6 @@ SOURCES += \
         main.cpp
 
 HEADERS += \
+        calcpraye.h \
+        cordinates.h \
         prayes_calculator.h

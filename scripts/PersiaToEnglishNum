@@ -1,0 +1,30 @@
+#!/usr/bin/python3
+
+with open("variable", "r") as userfile, open("lasttime", "w") as last:
+	for line in userfile.readlines():
+		oneEditedLine = ""
+		for char in line:
+			if char == '٫':
+				char = '.'
+			elif char == '۰':
+				char = '0'
+			elif char == '۱':
+				char = '1'
+			elif char == '۲':
+				char = '2'
+			elif char == '۳':
+				char = '3'
+			elif char == '۴':
+				char = '4'
+			elif char == '۵':
+				char = '5'
+			elif char == '۶':
+				char = '6'
+			elif char == '۷':
+				char = '7'
+			elif char == '۸':
+				char = '8'
+			elif char == '۹':
+				char = '9'
+			oneEditedLine += char
+		last.write(oneEditedLine)

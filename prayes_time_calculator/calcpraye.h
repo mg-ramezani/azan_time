@@ -1,6 +1,6 @@
 /*
  *  In The Name Of God.
- * <main.cpp>
+ * <calcpraye.cpp>
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
@@ -17,21 +17,35 @@
  * @MG_Ramezani. 2019 10 9
  * g1999raemzani@gmail.com
  */
-#include <iostream>
-#include <ctime>
-#include "calcpraye.h"
-#include <fstream>
-#include <string>
-#include <string.h>
 
-int main (void)
+#include "prayes_calculator.h"
+#include "cordinates.h"
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+
+/* Azan Time */
+static const char* TimeName[] {
+    "Fajr",
+    "Sunrise",
+    "Dhuhr",
+    "Asr",
+    "Sunset",
+    "Maghrib",
+    "Isha",
+};
+
+constexpr unsigned short int AzanTimesCount = AzanTime::TimesCount;
+
+void giveMeAllTime(double azan_time[])
 {
-    /*double times[AzanTimesCount];
-    giveMeAllTime(times);
-    for(int i=0; i < AzanTimesCount; ++i)
-        std::cout << TimeName[i] << " : " <<
-            AzanTime::float_time_to_time24(times[i]).c_str() << std::endl;*/
-    for(int i=0; i < 1000; ++i)
-        std::cout << (strcmp(cityName[i][i], "استان تهران") == 0 ? cityName[i][i] : " ") << std::endl;
-    return 0;
+    static class AzanTime prayer_time;
+    time_t date = time(nullptr);
+
+    constexpr double latitude  = 35.6892;
+    constexpr double longitude = 51.3890;
+    const     double timezone  = AzanTime::get_effective_timezone(date);
+
+    prayer_time.get_prayer_times(date, latitude, longitude,
+        timezone, azan_time);
 }

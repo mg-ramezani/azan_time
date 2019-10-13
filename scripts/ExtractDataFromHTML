@@ -1,0 +1,24 @@
+#!/usr/bin/python3
+import re as regex
+
+
+with open("s", "r") as userfile, open("output", "w") as output:
+	counter = 0
+	for line in userfile.readlines():
+		result = regex.search(r'<td[^>]*>(.*?)<\/td>', line);
+		if result:
+			city = regex.search(r'<a[^>]*>(.*?)<\/a>', result.group(1))
+			
+			if city:
+				counter=0
+				city = city.group(1)
+				if city != "":
+					output.write(city.strip(" \n") + ":")
+			else:
+				if result != "":
+					output.write(result.group(1).strip(" \n") + ":");
+		counter+=1
+		if counter == 4:
+			output.write("\r\n")
+		
+			
