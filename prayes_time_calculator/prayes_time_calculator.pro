@@ -4,7 +4,8 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+        prayes_calculator.cpp
 
 HEADERS += \
         calcpraye.h \

@@ -25,27 +25,27 @@
 #include <stdlib.h>
 
 /* Azan Time */
-static const char* TimeName[] {
-    "Fajr",
-    "Sunrise",
-    "Dhuhr",
-    "Asr",
-    "Sunset",
-    "Maghrib",
-    "Isha",
-};
+static const char* TimeName
+     []{
+          "Fajr",
+          "Sunrise",
+          "Dhuhr",
+          "Asr",
+          "Sunset",
+          "Maghrib",
+          "Isha",
+     };
 
-constexpr unsigned short int AzanTimesCount = AzanTime::TimesCount;
+constexpr auto AzanTimesCount{AzanTime::TimesCount};
 
 void giveMeAllTime(double azan_time[])
 {
     static class AzanTime prayer_time;
-    time_t date = time(nullptr);
+    time_t date{time(nullptr)};
 
-    constexpr double latitude  = 35.6892;
-    constexpr double longitude = 51.3890;
-    const     double timezone  = AzanTime::get_effective_timezone(date);
+    constexpr auto latitude{35.6892};
+    constexpr auto longitude{51.3890};
+    const auto timezone{AzanTime::get_effective_timezone(date)};
 
-    prayer_time.get_prayer_times(date, latitude, longitude,
-        timezone, azan_time);
+    prayer_time.get_prayer_times(date, latitude, longitude, timezone, azan_time);
 }

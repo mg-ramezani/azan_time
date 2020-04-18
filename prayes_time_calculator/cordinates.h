@@ -19,7 +19,7 @@
  */
 #ifndef CORDINATES_H
 #define CORDINATES_H
-
+#define CITY_ARRAY_LENGTH 974
 static const char cityName[1000][4][50]
 {
     { "استان اردبیل", "تازه‌کندانگوت", "39.042881", "47.754331" },
