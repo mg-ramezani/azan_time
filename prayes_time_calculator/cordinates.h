@@ -19,8 +19,18 @@
  */
 #ifndef CORDINATES_H
 #define CORDINATES_H
+
 #define CITY_ARRAY_LENGTH 974
-static const char cityName[1000][4][50]
+
+#include <vector>
+#include <string>
+
+#include "types.h"
+
+using namespace std::literals;
+
+// clang-format off
+static const vec_strings cityName
 {
     { "استان اردبیل", "تازه‌کندانگوت", "39.042881", "47.754331" },
     { "استان اردبیل", "خلخال", "37.624719", "48.53135" },
@@ -997,5 +1007,6 @@ static const char cityName[1000][4][50]
     { "", "دیلمان", "36.888306", "49.906411" },
     { "", "کومله", "37.152006", "50.174514" },
 };
+// clang-format on
 
 #endif // CORDINATES_H
