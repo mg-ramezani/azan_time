@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/sounds/azan">
+        <file>58-naghshbandi.mp3</file>
+    </qresource>
+</RCC>

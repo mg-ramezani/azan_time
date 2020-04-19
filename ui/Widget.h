@@ -5,6 +5,9 @@
 
 #include "calcpraye.h"
 
+class QMediaPlayer;
+class QTimer;
+
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -26,9 +29,17 @@ private slots:
 
 private:
     void init_name_of_state(void);
+    void check_for_praye_time(void);
+    void play_azan_and_reinit(void);
 
 private:
     Ui::azan_widget *ui;
     Azan::CalculateAzan khode_azon;
+    vec_string last_pray_time;
+    QMediaPlayer *player{nullptr};
+
+    QTimer *first_timer;
+    QTimer *second_timer;
+    QTimer *third_timer;
 };
 #endif // WIDGET_H

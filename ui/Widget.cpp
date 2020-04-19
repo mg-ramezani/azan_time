@@ -3,14 +3,30 @@
 
 #include <string>
 
+#include <QMediaPlayer>
+#include <QDateTime>
+#include <QTimer>
+#include <QTime>
+#include <QUrl>
+
 azan_widget::azan_widget(QWidget* parent)
     : QWidget(parent)
     , ui(new Ui::azan_widget)
+    , player(new QMediaPlayer(this))
+    , first_timer(new QTimer(this))
+    , second_timer(new QTimer(this))
+    , third_timer(new QTimer(this))
 {
     ui->setupUi(this);
     setWindowTitle("Azan-v0.1");
 
     init_name_of_state();
+
+    connect(first_timer, &QTimer::timeout, this, &azan_widget::play_azan_and_reinit);
+    connect(second_timer, &QTimer::timeout, this, &azan_widget::play_azan_and_reinit);
+    connect(third_timer, &QTimer::timeout, this, &azan_widget::play_azan_and_reinit);
+
+    player->setMedia(QUrl("qrc:/sounds/azan/58-naghshbandi.mp3"));
 }
 
 azan_widget::~azan_widget()
@@ -37,6 +53,25 @@ void azan_widget::init_name_of_state()
         }
     }
     ui->comboBox_state->addItem("شهرهای دیگر");
+}
+
+void azan_widget::play_azan_and_reinit()
+{
+    player->play();
+    check_for_praye_time();
+}
+
+void azan_widget::check_for_praye_time()
+{
+    auto current_time{QTime::currentTime()};
+
+    auto first_point{QTime::fromString(ui->label_faraj->text(), "HH:mm")};
+    auto second_point{QTime::fromString(ui->label_dhuhr->text(), "HH:mm")};
+    auto third_point{QTime::fromString(ui->label_maghrib->text(), "HH:mm")};
+
+    first_timer->start(current_time.secsTo(first_point));
+    second_timer->start(current_time.secsTo(second_point));
+    third_timer->start(current_time.secsTo(third_point));
 }
 
 void azan_widget::on_comboBox_state_currentIndexChanged(const QString& arg1)
@@ -78,6 +113,8 @@ void azan_widget::on_pushButton_clicked()
             ui->label_sunset_3->setText(s(prayer_times.at(AzanTime::Sunset)));
             ui->label_maghrib->setText(s(prayer_times.at(AzanTime::Maghrib)));
 #undef s
+            last_pray_time = std::move(prayer_times);
+            break;
         }
     }
 }
