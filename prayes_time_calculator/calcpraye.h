@@ -18,34 +18,49 @@
  * g1999raemzani@gmail.com
  */
 
-#include "prayes_calculator.h"
-#include "cordinates.h"
-#include <stdio.h>
-#include <time.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <utility>
+#include <string>
+#include <vector>
+#include <ctime>
 
-/* Azan Time */
-static const char* TimeName
-     []{
-          "Fajr",
-          "Sunrise",
-          "Dhuhr",
-          "Asr",
-          "Sunset",
-          "Maghrib",
-          "Isha",
-     };
+#include "prayes_calculator.h"
+#include "noncopyable.hpp"
+#include "cordinates.h"
+#include "types.h"
 
-constexpr auto AzanTimesCount{AzanTime::TimesCount};
-
-void giveMeAllTime(double azan_time[])
+namespace Azan
 {
-    static class AzanTime prayer_time;
-    time_t date{time(nullptr)};
+constexpr auto azan_times_count{AzanTime::TimesCount};
 
-    constexpr auto latitude{35.6892};
-    constexpr auto longitude{51.3890};
-    const auto timezone{AzanTime::get_effective_timezone(date)};
+class CalculateAzan : private noncopyable
+{
+private:
+    cordinate lat_long;
+    vec_string prayer_times;
 
-    prayer_time.get_prayer_times(date, latitude, longitude, timezone, azan_time);
-}
+    time_t date;
+    double time_zone;
+
+    AzanTime prayer_calculator;
+
+public:
+    CalculateAzan(cordinate cor);
+    CalculateAzan(void) = default;
+    CalculateAzan(double lat, double lon);
+    CalculateAzan(const std::string& name);
+
+    const vec_string& get_prayer_times(void);
+    void print_available_cordinate(void);
+
+    cordinate get_current_cordinate(void) const;
+
+    double get_current_latitude(void) const;
+    double get_current_longitude(void) const;
+
+    void set_new_cordinates(cordinate cor);
+    void set_new_cordinates(double lat, double lon);
+    void set_new_cordinates(const std::string& name);
+};
+} // namespace Azan
