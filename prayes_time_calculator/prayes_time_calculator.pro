@@ -5,8 +5,8 @@ CONFIG -= qt
 
 SOURCES += \
         calcpraye.cpp \
-        main.cpp \
-        prayes_calculator.cpp
+        prayes_calculator.cpp \
+        test.cpp
 
 HEADERS += \
         calcpraye.h \
