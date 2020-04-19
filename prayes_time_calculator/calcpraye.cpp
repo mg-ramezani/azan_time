@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <iostream>
 
+#include "cordinates.h"
+
 Azan::CalculateAzan::CalculateAzan(cordinate cor)
     : lat_long(cor)
     , prayer_times(azan_times_count)
@@ -55,6 +57,16 @@ void Azan::CalculateAzan::print_available_cordinate()
     }
 }
 
+const vec_strings& Azan::CalculateAzan::get_availabel_cordinate() const
+{
+    return city_names;
+}
+
+size_t Azan::CalculateAzan::get_length_of_availabel_cordinate() const
+{
+    return CITY_ARRAY_LENGTH;
+}
+
 cordinate Azan::CalculateAzan::get_current_cordinate() const
 {
     return lat_long;
@@ -84,10 +96,10 @@ void Azan::CalculateAzan::set_new_cordinates(const std::string& name)
 {
     for (size_t i{}; i < CITY_ARRAY_LENGTH; ++i)
     {
-        if (std::string(std::string(city_names[i][0]) + ":" + std::string(city_names[i][1])) == name)
+        if (city_names[i][0] + ":" + city_names[i][1] == name)
         {
-            const double lat{std::atof(city_names[i][2])};
-            const double lon{std::atof(city_names[i][3])};
+            const double lat{std::atof(city_names[i][2].c_str())};
+            const double lon{std::atof(city_names[i][3].c_str())};
 
             set_new_cordinates(lat, lon);
 

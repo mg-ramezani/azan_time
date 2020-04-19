@@ -27,7 +27,6 @@
 
 #include "prayes_calculator.h"
 #include "noncopyable.hpp"
-#include "cordinates.h"
 #include "types.h"
 
 namespace Azan
@@ -53,6 +52,8 @@ public:
 
     const vec_string& get_prayer_times(void);
     void print_available_cordinate(void);
+    const vec_strings& get_availabel_cordinate(void) const;
+    size_t get_length_of_availabel_cordinate(void) const;
 
     cordinate get_current_cordinate(void) const;
 

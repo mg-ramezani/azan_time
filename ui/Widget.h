@@ -3,19 +3,31 @@
 
 #include <QWidget>
 
+#include "calcpraye.h"
+
 QT_BEGIN_NAMESPACE
-namespace Ui { class Widget; }
+namespace Ui
+{
+class azan_widget;
+}
 QT_END_NAMESPACE
 
-class Widget : public QWidget
+class azan_widget : public QWidget
 {
     Q_OBJECT
 
 public:
-    Widget(QWidget *parent = nullptr);
-    ~Widget();
+    azan_widget(QWidget *parent = nullptr);
+    ~azan_widget();
+
+private slots:
+    void on_comboBox_state_currentIndexChanged(const QString &arg1);
 
 private:
-    Ui::Widget *ui;
+    void init_name_of_state(void);
+
+private:
+    Ui::azan_widget *ui;
+    Azan::CalculateAzan khode_azon;
 };
 #endif // WIDGET_H

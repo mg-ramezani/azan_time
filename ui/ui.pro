@@ -22,7 +22,9 @@ HEADERS += \
     Widget.h \
     calcpraye.h \
     types.h \
-    prayes_calculator.h
+    prayes_calculator.h \
+    noncopyable.hpp
+
 
 FORMS += \
     Widget.ui
