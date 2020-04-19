@@ -1,12 +1,14 @@
-TEMPLATE = app
-CONFIG += console c++17
+TEMPLATE = lib
+CONFIG += console static c++17
 CONFIG -= app_bundle
 CONFIG -= qt
+
+DESTDIR = $$PWD/../build/ui
 
 SOURCES += \
         calcpraye.cpp \
         prayes_calculator.cpp \
-        test.cpp
+#        test.c pp
 
 HEADERS += \
         calcpraye.h \
