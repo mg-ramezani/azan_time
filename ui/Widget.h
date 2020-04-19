@@ -22,6 +22,7 @@ public:
 
 private slots:
     void on_comboBox_state_currentIndexChanged(const QString &arg1);
+    void on_pushButton_clicked();
 
 private:
     void init_name_of_state(void);

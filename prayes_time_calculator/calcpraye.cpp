@@ -7,25 +7,16 @@
 
 Azan::CalculateAzan::CalculateAzan(cordinate cor)
     : lat_long(cor)
-    , prayer_times(azan_times_count)
-    , date(std::time(nullptr))
-    , time_zone(AzanTime::get_effective_timezone(date))
 {
 }
 
 Azan::CalculateAzan::CalculateAzan(double lat, double lon)
     : lat_long(std::make_pair(lat, lon))
-    , prayer_times(azan_times_count)
-    , date(std::time(nullptr))
-    , time_zone(AzanTime::get_effective_timezone(date))
 {
 }
 
 Azan::CalculateAzan::CalculateAzan(const std::string& name)
     : lat_long({})
-    , prayer_times(azan_times_count)
-    , date(std::time(nullptr))
-    , time_zone(AzanTime::get_effective_timezone(date))
 {
     set_new_cordinates(name);
 }
@@ -34,13 +25,18 @@ const vec_string& Azan::CalculateAzan::get_prayer_times()
 {
     ///TODO: Use std::vector instead of raw array
 
+    date = std::time(nullptr);
+    time_zone = AzanTime::get_effective_timezone(date);
+
     double __tmp[azan_times_count]{};
     prayer_calculator.get_prayer_times(
          date, lat_long.first, lat_long.second, time_zone, __tmp);
 
+    prayer_times.clear();
+
     for (size_t i{}; i < azan_times_count; ++i)
     {
-        prayer_times.at(i) = AzanTime::float_time_to_time24(__tmp[i]);
+        prayer_times.emplace_back(AzanTime::float_time_to_time24(__tmp[i]));
     }
 
     return prayer_times;
@@ -96,14 +92,15 @@ void Azan::CalculateAzan::set_new_cordinates(const std::string& name)
 {
     for (size_t i{}; i < CITY_ARRAY_LENGTH; ++i)
     {
-        if (city_names[i][0] + ":" + city_names[i][1] == name)
+        const auto n{city_names[i][0] + ":" + city_names[i][1]};
+        if (n == name)
         {
-            const double lat{std::atof(city_names[i][2].c_str())};
-            const double lon{std::atof(city_names[i][3].c_str())};
+            const auto lat{std::atof(city_names[i][2].c_str())};
+            const auto lon{std::atof(city_names[i][3].c_str())};
 
             set_new_cordinates(lat, lon);
 
-            break;
+            return;
         }
     }
 

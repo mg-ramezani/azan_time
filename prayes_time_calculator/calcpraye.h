@@ -47,7 +47,7 @@ private:
 public:
     CalculateAzan(cordinate cor);
     CalculateAzan(void) = default;
-    CalculateAzan(double lat, double lon);
+    explicit CalculateAzan(double lat, double lon);
     CalculateAzan(const std::string& name);
 
     const vec_string& get_prayer_times(void);
