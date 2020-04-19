@@ -22,15 +22,8 @@
 
 #define CITY_ARRAY_LENGTH 974
 
-#include <vector>
-#include <string>
-
-#include "types.h"
-
-using namespace std::literals;
-
 // clang-format off
-static const vec_strings cityName
+static const char city_names[1000][4][50]
 {
     { "استان اردبیل", "تازه‌کندانگوت", "39.042881", "47.754331" },
     { "استان اردبیل", "خلخال", "37.624719", "48.53135" },
