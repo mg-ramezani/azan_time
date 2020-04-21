@@ -18,7 +18,7 @@ azan_widget::azan_widget(QWidget* parent)
     , third_timer(new QTimer(this))
 {
     ui->setupUi(this);
-    setWindowTitle("Azan-v0.1");
+    setWindowTitle("Azan-v0.2");
 
     init_name_of_state();
 
@@ -26,7 +26,7 @@ azan_widget::azan_widget(QWidget* parent)
     connect(second_timer, &QTimer::timeout, this, &azan_widget::play_azan_and_reinit);
     connect(third_timer, &QTimer::timeout, this, &azan_widget::play_azan_and_reinit);
 
-    player->setMedia(QUrl("qrc:/sounds/azan/58-naghshbandi.mp3"));
+    set_default_voice();
 }
 
 azan_widget::~azan_widget()
@@ -61,6 +61,11 @@ void azan_widget::play_azan_and_reinit()
     check_for_praye_time();
 }
 
+void azan_widget::set_default_voice()
+{
+    player->setMedia(QUrl("qrc:/sounds/azan/58-naghshbandi.mp3"));
+}
+
 void azan_widget::check_for_praye_time()
 {
     auto current_time{QTime::currentTime()};
@@ -93,30 +98,60 @@ void azan_widget::on_comboBox_state_currentIndexChanged(const QString& arg1)
 
 void azan_widget::on_pushButton_clicked()
 {
-    const auto& list{khode_azon.get_availabel_cordinate()};
-
-    const auto state_city{((ui->comboBox_state->currentText() == "شهرهای دیگر") ? std::string() : ui->comboBox_state->currentText().toStdString()) + ":" + ui->comboBox_city->currentText().toStdString()};
-    const auto& arr_list{khode_azon.get_length_of_availabel_cordinate()};
-    for (size_t i{}; i < arr_list; ++i)
-    {
-        const auto t{list.at(i).at(0) + ":" + list.at(i).at(1)};
-
-        if (state_city == t)
-        {
-            khode_azon.set_new_cordinates(t);
-            const auto prayer_times{khode_azon.get_prayer_times()};
-
+    auto set_azan_time{
+         [&, this](const auto& times) {
 #define s(x) QString::fromStdString(x)
-            ui->label_faraj->setText(s(prayer_times.at(AzanTime::Fajr)));
-            ui->label_sunrise->setText(s(prayer_times.at(AzanTime::Sunrise)));
-            ui->label_dhuhr->setText(s(prayer_times.at(AzanTime::Dhuhr)));
-            ui->label_sunset_3->setText(s(prayer_times.at(AzanTime::Sunset)));
-            ui->label_maghrib->setText(s(prayer_times.at(AzanTime::Maghrib)));
+             ui->label_faraj->setText(s(times.at(AzanTime::Fajr)));
+             ui->label_sunrise->setText(s(times.at(AzanTime::Sunrise)));
+             ui->label_dhuhr->setText(s(times.at(AzanTime::Dhuhr)));
+             ui->label_sunset_3->setText(s(times.at(AzanTime::Sunset)));
+             ui->label_maghrib->setText(s(times.at(AzanTime::Maghrib)));
 #undef s
-            last_pray_time = std::move(prayer_times);
-            check_for_praye_time();
+             check_for_praye_time();
+         }};
 
-            break;
+    if (ui->groupBox_3->isChecked())
+    {
+        const auto cordinate{std::make_pair<double>(ui->lineEdit_lat->text().toDouble(),
+             ui->lineEdit_2_long->text().toDouble())};
+
+        khode_azon.set_new_cordinates(cordinate);
+        const auto prayer_times{khode_azon.get_prayer_times()};
+        set_azan_time(prayer_times);
+    }
+    else
+    {
+        const auto& list{khode_azon.get_availabel_cordinate()};
+        const auto state_city{((ui->comboBox_state->currentText() == "شهرهای دیگر") ? std::string() : ui->comboBox_state->currentText().toStdString()) + ":" + ui->comboBox_city->currentText().toStdString()};
+        const auto& arr_list{khode_azon.get_length_of_availabel_cordinate()};
+
+        for (size_t i{}; i < arr_list; ++i)
+        {
+            const auto t{list.at(i).at(0) + ":" + list.at(i).at(1)};
+
+            if (state_city == t)
+            {
+                khode_azon.set_new_cordinates(t);
+                const auto prayer_times{khode_azon.get_prayer_times()};
+
+                set_azan_time(prayer_times);
+                break;
+            }
         }
+    }
+}
+
+void azan_widget::on_groupBox_3_clicked()
+{
+    ui->comboBox_state->setEnabled(!ui->groupBox_3->isChecked());
+    ui->comboBox_city->setEnabled(!ui->groupBox_3->isChecked());
+}
+
+void azan_widget::on_checkBox_default_sound_toggled(bool checked)
+{
+    ui->pushButton_select_sound->setEnabled(!checked);
+    if (checked)
+    {
+        set_default_voice();
     }
 }

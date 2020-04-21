@@ -26,6 +26,9 @@ public:
 private slots:
     void on_comboBox_state_currentIndexChanged(const QString &arg1);
     void on_pushButton_clicked();
+    void on_groupBox_3_clicked();
+
+    void on_checkBox_default_sound_toggled(bool checked);
 
 private:
     void init_name_of_state(void);
@@ -33,9 +36,11 @@ private:
     void play_azan_and_reinit(void);
 
 private:
+    void set_default_voice(void);
+
+private:
     Ui::azan_widget *ui;
     Azan::CalculateAzan khode_azon;
-    vec_string last_pray_time;
     QMediaPlayer *player{nullptr};
 
     QTimer *first_timer;
