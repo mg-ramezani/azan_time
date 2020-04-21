@@ -62,6 +62,33 @@ void azan_widget::play_azan_and_reinit()
     check_for_praye_time();
 }
 
+void azan_widget::determine_which_one_is_closer(const QTime& current, const QTime& a, const QTime& b, const QTime& c)
+{
+    const QTime* closer{};
+
+    closer = (a.secsTo(current) < b.secsTo(current)) ? &a : &b;
+    closer = (closer->secsTo(current) < c.secsTo(current)) ? closer : &c;
+
+    if (closer == &a)
+    {
+        ui->label_faraj->setStyleSheet("font-weight: bold; color: red");
+        ui->label_dhuhr->setStyleSheet("");
+        ui->label_maghrib->setStyleSheet("");
+    }
+    else if (closer == &b)
+    {
+        ui->label_faraj->setStyleSheet("");
+        ui->label_dhuhr->setStyleSheet("font-weight: bold; color: red");
+        ui->label_maghrib->setStyleSheet("");
+    }
+    else if (closer == &c)
+    {
+        ui->label_faraj->setStyleSheet("");
+        ui->label_dhuhr->setStyleSheet("");
+        ui->label_maghrib->setStyleSheet("font-weight: bold; color: red");
+    }
+}
+
 void azan_widget::set_default_voice()
 {
     player->setMedia(QUrl("qrc:/sounds/azan/58-naghshbandi.mp3"));
@@ -74,6 +101,8 @@ void azan_widget::check_for_praye_time()
     auto first_point{QTime::fromString(ui->label_faraj->text(), "HH:mm")};
     auto second_point{QTime::fromString(ui->label_dhuhr->text(), "HH:mm")};
     auto third_point{QTime::fromString(ui->label_maghrib->text(), "HH:mm")};
+
+    determine_which_one_is_closer(current_time, first_point, second_point, third_point);
 
     if (ui->checkBox_faraj->isChecked())
     {

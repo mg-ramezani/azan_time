@@ -34,6 +34,7 @@ private:
     void init_name_of_state(void);
     void check_for_praye_time(void);
     void play_azan_and_reinit(void);
+    void determine_which_one_is_closer(const QTime &current, const QTime &a, const QTime &b, const QTime &c);
 
 private:
     void set_default_voice(void);
