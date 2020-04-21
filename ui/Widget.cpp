@@ -69,9 +69,9 @@ void azan_widget::check_for_praye_time()
     auto second_point{QTime::fromString(ui->label_dhuhr->text(), "HH:mm")};
     auto third_point{QTime::fromString(ui->label_maghrib->text(), "HH:mm")};
 
-    first_timer->start(current_time.secsTo(first_point));
-    second_timer->start(current_time.secsTo(second_point));
-    third_timer->start(current_time.secsTo(third_point));
+    first_timer->start(std::abs(current_time.secsTo(first_point)) * 1000);
+    second_timer->start(std::abs(current_time.secsTo(second_point)) * 1000);
+    third_timer->start(std::abs(current_time.secsTo(third_point)) * 1000);
 }
 
 void azan_widget::on_comboBox_state_currentIndexChanged(const QString& arg1)
@@ -114,6 +114,8 @@ void azan_widget::on_pushButton_clicked()
             ui->label_maghrib->setText(s(prayer_times.at(AzanTime::Maghrib)));
 #undef s
             last_pray_time = std::move(prayer_times);
+            check_for_praye_time();
+
             break;
         }
     }
