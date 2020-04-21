@@ -27,8 +27,8 @@ private slots:
     void on_comboBox_state_currentIndexChanged(const QString &arg1);
     void on_pushButton_clicked();
     void on_groupBox_3_clicked();
-
     void on_checkBox_default_sound_toggled(bool checked);
+    void on_pushButton_select_sound_clicked();
 
 private:
     void init_name_of_state(void);

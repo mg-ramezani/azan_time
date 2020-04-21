@@ -4,6 +4,7 @@
 #include <string>
 
 #include <QMediaPlayer>
+#include <QFileDialog>
 #include <QDateTime>
 #include <QTimer>
 #include <QTime>
@@ -165,4 +166,10 @@ void azan_widget::on_checkBox_default_sound_toggled(bool checked)
     {
         set_default_voice();
     }
+}
+
+void azan_widget::on_pushButton_select_sound_clicked()
+{
+    auto path{QFileDialog::getOpenFileUrl(this, "انتخاب صوت اذان", QUrl(), "*.mp3")};
+    player->setMedia(path);
 }
