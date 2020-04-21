@@ -3,10 +3,14 @@
 
 #include <string>
 
+#include <QSystemTrayIcon>
 #include <QMediaPlayer>
 #include <QFileDialog>
+#include <QCloseEvent>
 #include <QDateTime>
+#include <QAction>
 #include <QTimer>
+#include <QMenu>
 #include <QTime>
 #include <QUrl>
 
@@ -17,6 +21,12 @@ azan_widget::azan_widget(QWidget* parent)
     , first_timer(new QTimer(this))
     , second_timer(new QTimer(this))
     , third_timer(new QTimer(this))
+    , action_minimize(new QAction("کوچک‌نمایی", this))
+    , action_maximize(new QAction("بزرگ‌نمایی", this))
+    , action_mute(new QAction("بی‌صدا", this))
+    , action_quite(new QAction("خروج", this))
+    , tray_icon(new QSystemTrayIcon(this))
+    , tray_menu(new QMenu(this))
 {
     ui->setupUi(this);
     setWindowTitle("Azan-v0.2");
@@ -28,11 +38,30 @@ azan_widget::azan_widget(QWidget* parent)
     connect(third_timer, &QTimer::timeout, this, &azan_widget::play_azan_and_reinit);
 
     set_default_voice();
+
+    create_actions_connects();
+    create_menus();
+    set_menus_to_tray_icon();
+    config_tray_icon();
 }
 
 azan_widget::~azan_widget()
 {
     delete ui;
+}
+
+void azan_widget::closeEvent(QCloseEvent* event)
+{
+#ifdef Q_OS_OSX
+    if (!event->spontaneous() || !isVisible()) {
+        return;
+    }
+#endif
+    if (tray_icon->isVisible()) {
+        hide();
+        event->ignore();
+    }
+
 }
 
 void azan_widget::init_name_of_state()
@@ -92,6 +121,35 @@ void azan_widget::determine_which_one_is_closer(const QTime& current, const QTim
 void azan_widget::set_default_voice()
 {
     player->setMedia(QUrl("qrc:/sounds/azan/58-naghshbandi.mp3"));
+}
+
+inline void azan_widget::create_actions_connects()
+{
+    action_mute->setCheckable(true);
+    action_mute->setChecked(false);
+
+    connect(action_minimize, &QAction::triggered, this, &QWidget::hide);
+    connect(action_maximize, &QAction::triggered, this, &QWidget::showNormal);
+    connect(action_mute, &QAction::setChecked, this, [&, this](bool check){player->setMuted(!check);});
+    connect(action_quite, &QAction::triggered, this, &QCoreApplication::quit);
+}
+
+inline void azan_widget::create_menus()
+{
+    tray_menu->addActions({action_mute, action_minimize, action_maximize});
+    tray_menu->addSeparator();
+    tray_menu->addAction(action_quite);
+}
+
+inline void azan_widget::set_menus_to_tray_icon()
+{
+    tray_icon->setContextMenu(tray_menu);
+}
+
+void azan_widget::config_tray_icon()
+{
+    tray_icon->setIcon(QIcon(":/icon/icon[pngwing.com].png"));
+    tray_icon->setVisible(true);
 }
 
 void azan_widget::check_for_praye_time()

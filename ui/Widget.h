@@ -5,8 +5,11 @@
 
 #include "calcpraye.h"
 
+class QSystemTrayIcon;
 class QMediaPlayer;
+class QAction;
 class QTimer;
+class QMenu;
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -23,6 +26,9 @@ public:
     azan_widget(QWidget *parent = nullptr);
     ~azan_widget();
 
+protected:
+    void closeEvent(QCloseEvent* event) override;
+
 private slots:
     void on_comboBox_state_currentIndexChanged(const QString &arg1);
     void on_pushButton_clicked();
@@ -38,6 +44,10 @@ private:
 
 private:
     void set_default_voice(void);
+    inline void create_actions_connects(void);
+    inline void create_menus(void);
+    inline void set_menus_to_tray_icon(void);
+    inline void config_tray_icon(void);
 
 private:
     Ui::azan_widget *ui;
@@ -47,5 +57,13 @@ private:
     QTimer *first_timer;
     QTimer *second_timer;
     QTimer *third_timer;
+
+    QAction* action_minimize;
+    QAction* action_maximize;
+    QAction* action_mute;
+    QAction* action_quite;
+
+    QSystemTrayIcon *tray_icon;
+    QMenu* tray_menu;
 };
 #endif // WIDGET_H
