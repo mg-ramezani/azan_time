@@ -130,7 +130,7 @@ inline void azan_widget::create_actions_connects()
 
     connect(action_minimize, &QAction::triggered, this, &QWidget::hide);
     connect(action_maximize, &QAction::triggered, this, &QWidget::showNormal);
-    connect(action_mute, &QAction::setChecked, this, [&, this](bool check){player->setMuted(!check);});
+    connect(action_mute, &QAction::triggered, this, [&, this](bool check){(check) ? player->setVolume(0) : player->setVolume(100);});
     connect(action_quite, &QAction::triggered, this, &QCoreApplication::quit);
 }
 
