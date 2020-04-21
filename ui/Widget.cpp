@@ -95,8 +95,10 @@ void azan_widget::determine_which_one_is_closer(const QTime& current, const QTim
 {
     const QTime* closer{};
 
-    closer = (a.secsTo(current) < b.secsTo(current)) ? &a : &b;
-    closer = (closer->secsTo(current) < c.secsTo(current)) ? closer : &c;
+#define s(x) current.secsTo(x)
+    closer = (s(a) < s(b)) ? &a : &b;
+    closer = (s((*closer)) < s(c)) ? closer : &c;
+#undef s
 
     if (closer == &a)
     {
