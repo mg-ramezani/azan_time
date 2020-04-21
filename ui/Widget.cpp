@@ -272,3 +272,8 @@ void azan_widget::on_toolButton_sournd_test_clicked(bool checked)
         player->stop();
     }
 }
+
+void azan_widget::on_horizontalSlider_player_volume_sliderMoved(int position)
+{
+    player->setVolume(position);
+}
