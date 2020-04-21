@@ -5,9 +5,11 @@
 
 #include <QSystemTrayIcon>
 #include <QMediaPlayer>
+#include <QMessageBox>
 #include <QFileDialog>
 #include <QCloseEvent>
 #include <QDateTime>
+#include <QSettings>
 #include <QAction>
 #include <QTimer>
 #include <QMenu>
@@ -29,7 +31,13 @@ azan_widget::azan_widget(QWidget* parent)
     , tray_menu(new QMenu(this))
 {
     ui->setupUi(this);
-    setWindowTitle("Azan-v0.3");
+
+    QCoreApplication::setOrganizationName("Ghasem");
+    QCoreApplication::setOrganizationDomain("ghasem.org");
+    QCoreApplication::setApplicationName("Azan");
+    QCoreApplication::setApplicationVersion("v0.3");
+
+    setWindowTitle("Azan-" + QCoreApplication::applicationVersion());
 
     init_name_of_state();
 
@@ -43,11 +51,57 @@ azan_widget::azan_widget(QWidget* parent)
     create_menus();
     set_menus_to_tray_icon();
     config_tray_icon();
+
+    load_all_settings();
 }
 
 azan_widget::~azan_widget()
 {
+    QSettings settings;
+    settings.setValue("default_cordinate", ui->groupBox_3->isChecked());
+    settings.setValue("default_cordinate_lat", ui->lineEdit_lat->text());
+    settings.setValue("default_cordinate_long", ui->lineEdit_2_long->text());
+    settings.setValue("default_azan_sound", ui->checkBox_default_sound->isChecked());
+    settings.setValue("user_azan_sound", player->media().request().url());
+    settings.setValue("azan_sound_value", ui->horizontalSlider_player_volume->value());
+    settings.setValue("play_faraj_azan", ui->checkBox_faraj->isChecked());
+    settings.setValue("play_dhuhr_azan", ui->checkBox_dhuhr->isChecked());
+    settings.setValue("play_maghrib_azan", ui->checkBox_maghrib->isChecked());
+    settings.setValue("state", ui->comboBox_state->currentIndex());
+    settings.setValue("city", ui->comboBox_city->currentIndex());
+
     delete ui;
+}
+
+void azan_widget::load_all_settings()
+{
+    QSettings settings;
+
+    if(settings.value("default_cordinate").toBool())
+    {
+        ui->groupBox_3->setChecked(true);
+        ui->lineEdit_lat->setText(settings.value("default_cordinate_lat").toString());
+        ui->lineEdit_2_long->setText(settings.value("default_cordinate_long").toString());
+
+        on_groupBox_3_clicked();
+    }
+
+    if(!settings.value("default_azan_sound").toBool())
+    {
+        ui->checkBox_default_sound->setChecked(settings.value("default_azan_sound").toBool());
+        player->setMedia(settings.value("user_azan_sound").toUrl());
+    }
+
+    ui->horizontalSlider_player_volume->setValue(settings.value("azan_sound_value").toInt());
+    player->setVolume(settings.value("azan_sound_value").toInt());
+    ui->checkBox_faraj->setChecked(settings.value("play_faraj_azan").toBool());
+    ui->checkBox_dhuhr->setChecked(settings.value("play_dhuhr_azan").toBool());
+    ui->checkBox_maghrib->setChecked(settings.value("play_maghrib_azan").toBool());
+
+    ui->comboBox_state->setCurrentIndex(settings.value("state").toInt());
+    ui->comboBox_city->setCurrentIndex(settings.value("city").toInt());
+
+    on_pushButton_clicked();
 }
 
 void azan_widget::closeEvent(QCloseEvent* event)
@@ -153,6 +207,7 @@ void azan_widget::config_tray_icon()
     tray_icon->setIcon(QIcon(":/icon/icon[pngwing.com].png"));
     tray_icon->setVisible(true);
 }
+
 
 void azan_widget::check_for_praye_time()
 {
@@ -278,4 +333,39 @@ void azan_widget::on_toolButton_sournd_test_clicked(bool checked)
 void azan_widget::on_horizontalSlider_player_volume_sliderMoved(int position)
 {
     player->setVolume(position);
+}
+
+void azan_widget::on_toolButton_reset_default_clicked()
+{
+    constexpr auto title{"تأییدیه"};
+    constexpr auto text{"آیا واقعاً مطمئن هستید که می‌خواید تنظیمات پیش‌فرض رابرگردانید ؟"};
+    const auto result {QMessageBox::question(this, title, text)};
+
+    if(result == QMessageBox::No)
+    {
+        return;
+    }
+
+    ui->label_faraj->clear();
+    ui->label_sunrise->clear();
+    ui->label_dhuhr->clear();
+    ui->label_sunset_3->clear();
+    ui->label_maghrib->clear();
+
+    ui->comboBox_city->setCurrentIndex(0);
+    ui->comboBox_state->setCurrentIndex(0);
+    ui->comboBox_city->setEnabled(true);
+    ui->comboBox_state->setEnabled(true);
+
+    ui->groupBox_3->setChecked(false);
+    ui->lineEdit_lat->clear();
+    ui->lineEdit_2_long->clear();
+
+    ui->checkBox_default_sound->setChecked(true);
+    player->setMedia(QUrl("qrc:/sounds/azan/58-naghshbandi.mp3"));
+    ui->horizontalSlider_player_volume->setValue(100);
+
+    ui->checkBox_faraj->setChecked(true);
+    ui->checkBox_dhuhr->setChecked(true);
+    ui->checkBox_maghrib->setChecked(true);
 }

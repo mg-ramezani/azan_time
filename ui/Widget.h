@@ -37,6 +37,7 @@ private slots:
     void on_pushButton_select_sound_clicked();
     void on_toolButton_sournd_test_clicked(bool checked);
     void on_horizontalSlider_player_volume_sliderMoved(int position);
+    void on_toolButton_reset_default_clicked();
 
 private:
     void init_name_of_state(void);
@@ -50,6 +51,7 @@ private:
     inline void create_menus(void);
     inline void set_menus_to_tray_icon(void);
     inline void config_tray_icon(void);
+    void load_all_settings(void);
 
 private:
     Ui::azan_widget *ui;

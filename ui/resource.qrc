@@ -4,5 +4,6 @@
     </qresource>
     <qresource prefix="/icon">
         <file>icon[pngwing.com].png</file>
+        <file>reset.png</file>
     </qresource>
 </RCC>
