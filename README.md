@@ -3,7 +3,7 @@
 Azan time calculation, besed on [this algorithm](http://praytimes.org/calculation) and [this](http://praytimes.org/manual#Downloads_and_Examples) library.
 
 ## Screenshot
-![Alt text](./2020-04-21_18-12.png)
+![Alt text](./2020-04-21_23-22.png)
 
 ## Dependency 
    - libc

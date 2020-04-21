@@ -29,7 +29,7 @@ azan_widget::azan_widget(QWidget* parent)
     , tray_menu(new QMenu(this))
 {
     ui->setupUi(this);
-    setWindowTitle("Azan-v0.2");
+    setWindowTitle("Azan-v0.3");
 
     init_name_of_state();
 
