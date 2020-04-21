@@ -1,8 +1,7 @@
 QT     += core gui widgets multimedia
 CONFIG += c++17
 
-LIBS += $$PWD/../build/ui/libprayes_time_calculator.a
-LIBS += -lpthread
+linux: LIBS += $$PWD/../build/ui/libprayes_time_calculator.a
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings

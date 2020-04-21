@@ -1,5 +1,7 @@
 #include "prayes_calculator.h"
 
+#include <time.h>
+
 AzanTime::AzanTime(AzanTime::CalculationMethod __calc_method, AzanTime::JuristicMethod __asr_juristic, AzanTime::AdjustingMethod __adjust_high_lats, double __dhuhr_minutes)
     : calc_method(__calc_method)
     , asr_juristic(__asr_juristic)
