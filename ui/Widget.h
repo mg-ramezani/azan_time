@@ -35,6 +35,7 @@ private slots:
     void on_groupBox_3_clicked();
     void on_checkBox_default_sound_toggled(bool checked);
     void on_pushButton_select_sound_clicked();
+    void on_toolButton_sournd_test_clicked(bool checked);
 
 private:
     void init_name_of_state(void);

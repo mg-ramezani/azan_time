@@ -260,3 +260,15 @@ void azan_widget::on_pushButton_select_sound_clicked()
     auto path{QFileDialog::getOpenFileUrl(this, "انتخاب صوت اذان", QUrl(), "*.mp3")};
     player->setMedia(path);
 }
+
+void azan_widget::on_toolButton_sournd_test_clicked(bool checked)
+{
+    if(checked)
+    {
+        player->play();
+    }
+    else
+    {
+        player->stop();
+    }
+}

@@ -109,6 +109,16 @@
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QToolButton" name="toolButton_sournd_test">
+             <property name="text">
+              <string>▶</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
          <item>
