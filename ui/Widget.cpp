@@ -74,9 +74,20 @@ void azan_widget::check_for_praye_time()
     auto second_point{QTime::fromString(ui->label_dhuhr->text(), "HH:mm")};
     auto third_point{QTime::fromString(ui->label_maghrib->text(), "HH:mm")};
 
-    first_timer->start(std::abs(current_time.secsTo(first_point)) * 1000);
-    second_timer->start(std::abs(current_time.secsTo(second_point)) * 1000);
-    third_timer->start(std::abs(current_time.secsTo(third_point)) * 1000);
+    if (ui->checkBox_faraj->isChecked())
+    {
+        first_timer->start(std::abs(current_time.secsTo(first_point)) * 1000);
+    }
+
+    if (ui->checkBox_dhuhr->isChecked())
+    {
+        second_timer->start(std::abs(current_time.secsTo(second_point)) * 1000);
+    }
+
+    if (ui->checkBox_maghrib->isChecked())
+    {
+        third_timer->start(std::abs(current_time.secsTo(third_point)) * 1000);
+    }
 }
 
 void azan_widget::on_comboBox_state_currentIndexChanged(const QString& arg1)
