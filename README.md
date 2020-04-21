@@ -20,4 +20,4 @@ Azan time calculation, besed on [this algorithm](http://praytimes.org/calculatio
    - GCC 9.3.0
 
 ## TODO
-   [ ] Compile on windows.
+   - [ ] Compile on windows.
