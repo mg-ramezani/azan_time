@@ -79,6 +79,7 @@ azan_widget::~azan_widget()
     settings.setValue("play_maghrib_azan", ui->checkBox_maghrib->isChecked());
     settings.setValue("state", ui->comboBox_state->currentIndex());
     settings.setValue("city", ui->comboBox_city->currentIndex());
+    settings.setValue("enable_disable_tray_icon", ui->toolButton_enable_try_icon->isChecked());
 
     delete ui;
 }
@@ -111,6 +112,9 @@ void azan_widget::load_all_settings()
     ui->comboBox_state->setCurrentIndex(settings.value("state").toInt());
     ui->comboBox_city->setCurrentIndex(settings.value("city").toInt());
 
+    ui->toolButton_enable_try_icon->setChecked(settings.value("enable_disable_tray_icon").toBool());
+
+    on_toolButton_enable_try_icon_clicked(ui->toolButton_enable_try_icon->isChecked());
     on_pushButton_clicked();
 }
 
@@ -209,7 +213,6 @@ inline void azan_widget::set_menus_to_tray_icon()
 void azan_widget::config_tray_icon()
 {
     tray_icon->setIcon(QIcon(":/icon/icon[pngwing.com].png"));
-    tray_icon->setVisible(true);
 }
 
 void azan_widget::check_for_praye_time()
@@ -369,4 +372,9 @@ void azan_widget::on_toolButton_reset_default_clicked()
     ui->checkBox_faraj->setChecked(true);
     ui->checkBox_dhuhr->setChecked(true);
     ui->checkBox_maghrib->setChecked(true);
+}
+
+void azan_widget::on_toolButton_enable_try_icon_clicked(bool checked)
+{
+    tray_icon->setVisible(checked);
 }

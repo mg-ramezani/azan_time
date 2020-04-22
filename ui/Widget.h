@@ -38,6 +38,7 @@ private slots:
     void on_toolButton_sournd_test_clicked(bool checked);
     void on_horizontalSlider_player_volume_sliderMoved(int position);
     void on_toolButton_reset_default_clicked();
+    void on_toolButton_enable_try_icon_clicked(bool checked);
 
 private:
     void init_name_of_state(void);
