@@ -19,5 +19,5 @@ Azan time calculation, besed on [this algorithm](http://praytimes.org/calculatio
 	
 ## Tested Compilers
    - GCC 9.3.0
-   - MSVC2017
+   - MSVC2015
 
