@@ -19,7 +19,7 @@
  */
 #include <iostream>
 
-#include "calcpraye.h"
+//#include "calcpraye.h"
 
 static const char* praye_times_name
      []{
@@ -32,28 +32,30 @@ static const char* praye_times_name
           "isha",
      };
 
+#include "cordinates.h"
+
 int main(void)
 {
-    Azan::CalculateAzan t(32.71451, 52.44083);
+//    Azan::CalculateAzan t(32.71451, 52.44083);
 
-    auto p{t.get_prayer_times()};
+//    auto p{t.get_prayer_times()};
 
-    auto print =
-         [&]() {
-             for (size_t i{}; i < Azan::azan_times_count; ++i)
-             {
-                 std::cout << praye_times_name[i] << ": " << p.at(i) << std::endl;
-             }
-         };
+//    auto print =
+//         [&]() {
+//             for (size_t i{}; i < Azan::azan_times_count; ++i)
+//             {
+//                 std::cout << praye_times_name[i] << ": " << p.at(i) << std::endl;
+//             }
+//         };
 
-    print();
+//    print();
 
-    t.set_new_cordinates(35.75, 51.375);
-    p = t.get_prayer_times();
+//    t.set_new_cordinates(35.75, 51.375);
+//    p = t.get_prayer_times();
 
-    std::cout << "------------------------------" << std::endl;
+//    std::cout << "------------------------------" << std::endl;
 
-    print();
+//    print();
 
-    return 0;
+//    return 0;
 }

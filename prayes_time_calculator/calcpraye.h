@@ -18,6 +18,9 @@
  * g1999raemzani@gmail.com
  */
 
+#ifndef CALCPRAYE_HEADER
+#define CALCPRAYE_HEADER
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <utility>
@@ -65,3 +68,5 @@ public:
     void set_new_cordinates(const std::string& name);
 };
 } // namespace Azan
+
+#endif

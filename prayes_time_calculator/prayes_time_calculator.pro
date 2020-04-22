@@ -3,7 +3,7 @@ CONFIG += console static c++17
 CONFIG -= app_bundle
 CONFIG -= qt
 
-DESTDIR = $$PWD/../build/ui
+#DESTDIR = $$PWD/../build/ui
 
 win32
 {
@@ -20,7 +20,7 @@ QMAKE_POST_LINK += $$QMAKE_COPY $$quote($$PWD/cordinates.h) $$quote($$PWD/../ui)
 SOURCES += \
         calcpraye.cpp \
         prayes_calculator.cpp \
-#        test.c pp
+#        test.cpp
 
 HEADERS += \
         calcpraye.h \

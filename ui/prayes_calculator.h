@@ -1,41 +1,5 @@
-/*-------------------------- In the name of God ----------------------------*\
-
-    libAzanTime 1.0
-    Islamic prayer times calculator library
-    Based on PrayTimes 1.1 JavaScript library
-
------------------------------ Copyright Block --------------------------------
-
-Copyright (C) 2007-2010 PrayTimes.org
-
-Developed By: Mohammad Ebrahim Mohammadi Panah <ebrahim at mohammadi dot ir>
-Based on a JavaScript Code By: Hamid Zarrabi-Zadeh
-
-License: GNU LGPL v3.0
-
-TERMS OF USE:
-    Permission is granted to use this code, with or
-    without modification, in any website or application
-    provided that credit is given to the original work
-    with a link back to PrayTimes.org.
-
-This program is distributed in the hope that it will
-be useful, but WITHOUT ANY WARRANTY.
-
-PLEASE DO NOT REMOVE THIS COPYRIGHT BLOCK.
-
-------------------------------------------------------------------------------
-
-User's Manual:
-http://praytimes.org/manual
-
-Calculating Formulas:
-http://praytimes.org/calculation
-
-Code Repository:
-http://code.ebrahim.ir/AzanTime/
-
-\*--------------------------------------------------------------------------*/
+#ifndef PRAYES_TIME_CALCULATOR
+#define PRAYES_TIME_CALCULATOR
 
 #include <cstdio>
 #include <cmath>
@@ -300,3 +264,4 @@ private:
 
     static const int NUM_ITERATIONS = 1; // number of iterations needed to compute times
 };
+#endif
