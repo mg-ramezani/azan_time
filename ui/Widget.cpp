@@ -41,9 +41,19 @@ azan_widget::azan_widget(QWidget* parent)
 
     init_name_of_state();
 
-    connect(first_timer, &QTimer::timeout, this, &azan_widget::play_azan_and_reinit);
-    connect(second_timer, &QTimer::timeout, this, &azan_widget::play_azan_and_reinit);
-    connect(third_timer, &QTimer::timeout, this, &azan_widget::play_azan_and_reinit);
+    create_timer_connects();
+
+    connect(player, &QMediaPlayer::mediaStatusChanged, this, [this](QMediaPlayer::MediaStatus status)
+    {
+        if(status == QMediaPlayer::MediaStatus::EndOfMedia)
+        {
+            check_for_praye_time();
+
+            ui->label_faraj->setStyleSheet("");
+            ui->label_dhuhr->setStyleSheet("");
+            ui->label_maghrib->setStyleSheet("");
+        }
+    });
 
     set_default_voice();
 
@@ -104,6 +114,30 @@ void azan_widget::load_all_settings()
     on_pushButton_clicked();
 }
 
+void azan_widget::create_timer_connects()
+{
+    connect(first_timer, &QTimer::timeout, this, [this]()
+    {
+        ui->label_faraj->setStyleSheet("font-weight: bold; color: red");
+
+        play_azan();
+    });
+
+    connect(second_timer, &QTimer::timeout, this, [this]()
+    {
+        ui->label_dhuhr->setStyleSheet("font-weight: bold; color: red");
+
+        play_azan();
+    });
+
+    connect(third_timer, &QTimer::timeout, this, [this]()
+    {
+        ui->label_maghrib->setStyleSheet("font-weight: bold; color: red");
+
+        play_azan();
+    });
+}
+
 void azan_widget::closeEvent(QCloseEvent* event)
 {
 #ifdef Q_OS_OSX
@@ -139,39 +173,9 @@ void azan_widget::init_name_of_state()
     ui->comboBox_state->addItem("شهرهای دیگر");
 }
 
-void azan_widget::play_azan_and_reinit()
+void azan_widget::play_azan()
 {
     player->play();
-    check_for_praye_time();
-}
-
-void azan_widget::determine_which_one_is_closer(const QTime& current, const QTime& a, const QTime& b, const QTime& c)
-{
-    const QTime* closer{};
-
-#define s(x) current.secsTo(x)
-    closer = (s(a) < s(b)) ? &a : &b;
-    closer = (s((*closer)) < s(c)) ? closer : &c;
-#undef s
-
-    if (closer == &a)
-    {
-        ui->label_faraj->setStyleSheet("font-weight: bold; color: red");
-        ui->label_dhuhr->setStyleSheet("");
-        ui->label_maghrib->setStyleSheet("");
-    }
-    else if (closer == &b)
-    {
-        ui->label_faraj->setStyleSheet("");
-        ui->label_dhuhr->setStyleSheet("font-weight: bold; color: red");
-        ui->label_maghrib->setStyleSheet("");
-    }
-    else if (closer == &c)
-    {
-        ui->label_faraj->setStyleSheet("");
-        ui->label_dhuhr->setStyleSheet("");
-        ui->label_maghrib->setStyleSheet("font-weight: bold; color: red");
-    }
 }
 
 void azan_widget::set_default_voice()
@@ -208,7 +212,6 @@ void azan_widget::config_tray_icon()
     tray_icon->setVisible(true);
 }
 
-
 void azan_widget::check_for_praye_time()
 {
     auto current_time{QTime::currentTime()};
@@ -216,8 +219,6 @@ void azan_widget::check_for_praye_time()
     auto first_point{QTime::fromString(ui->label_faraj->text(), "HH:mm")};
     auto second_point{QTime::fromString(ui->label_dhuhr->text(), "HH:mm")};
     auto third_point{QTime::fromString(ui->label_maghrib->text(), "HH:mm")};
-
-    determine_which_one_is_closer(current_time, first_point, second_point, third_point);
 
     if (ui->checkBox_faraj->isChecked())
     {

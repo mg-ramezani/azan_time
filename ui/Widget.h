@@ -42,8 +42,7 @@ private slots:
 private:
     void init_name_of_state(void);
     void check_for_praye_time(void);
-    void play_azan_and_reinit(void);
-    void determine_which_one_is_closer(const QTime &current, const QTime &a, const QTime &b, const QTime &c);
+    void play_azan(void);
 
 private:
     void set_default_voice(void);
@@ -52,6 +51,7 @@ private:
     inline void set_menus_to_tray_icon(void);
     inline void config_tray_icon(void);
     void load_all_settings(void);
+    inline void create_timer_connects(void);
 
 private:
     Ui::azan_widget *ui;
