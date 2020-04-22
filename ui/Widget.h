@@ -36,9 +36,9 @@ private slots:
     void on_checkBox_default_sound_toggled(bool checked);
     void on_pushButton_select_sound_clicked();
     void on_toolButton_sournd_test_clicked(bool checked);
-    void on_horizontalSlider_player_volume_sliderMoved(int position);
     void on_toolButton_reset_default_clicked();
     void on_toolButton_enable_try_icon_clicked(bool checked);
+    void on_horizontalSlider_player_volume_valueChanged(int value);
 
 private:
     void init_name_of_state(void);

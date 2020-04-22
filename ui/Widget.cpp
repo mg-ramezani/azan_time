@@ -334,11 +334,6 @@ void azan_widget::on_toolButton_sournd_test_clicked(bool checked)
     }
 }
 
-void azan_widget::on_horizontalSlider_player_volume_sliderMoved(int position)
-{
-    player->setVolume(position);
-}
-
 void azan_widget::on_toolButton_reset_default_clicked()
 {
     constexpr auto title{"تأییدیه"};
@@ -377,4 +372,9 @@ void azan_widget::on_toolButton_reset_default_clicked()
 void azan_widget::on_toolButton_enable_try_icon_clicked(bool checked)
 {
     tray_icon->setVisible(checked);
+}
+
+void azan_widget::on_horizontalSlider_player_volume_valueChanged(int value)
+{
+    player->setVolume(value);
 }
