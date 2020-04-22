@@ -68,12 +68,12 @@ public:
          double __dhuhr_minutes = double());
 
     /* return prayer times for a given date */
-    void get_prayer_times(unsigned year, unsigned month, unsigned day, double _latitude, double _longitude, double _timezone, double times[]);
+    void get_prayer_times_t(unsigned year, unsigned month, unsigned day, double lat, double lon, double timez, double t[]);
 
-	/* return prayer times for a given date */
+    /* return prayer times for a given date */
     void get_prayer_times(time_t date, const double& latitude, const double& longitude, const double& timezone, double times[]);
 
-	/* set the calculation method  */
+    /* set the calculation method  */
     void set_calc_method(const CalculationMethod& method_id);
 
 	/* set the juristic method for Asr */
