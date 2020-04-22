@@ -3,10 +3,11 @@ CONFIG += console static c++17
 CONFIG -= app_bundle
 CONFIG -= qt
 
-#DESTDIR = $$PWD/../build/ui
+linux: DESTDIR = $$PWD/../build/ui
 
 win32
 {
+DESTDIR = $$PWD/../build_windows/ui
 DEFINES += _USE_MATH_DEFINES
 DEFINES += NOMINMAX
 }

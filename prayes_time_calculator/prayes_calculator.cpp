@@ -21,20 +21,20 @@ AzanTime::AzanTime(AzanTime::CalculationMethod __calc_method, AzanTime::Juristic
     method_params[Custom] = MethodConfig(18.0, true, 0.0, false, 17.0); // Custom
 }
 
-void AzanTime::get_prayer_times(unsigned year, unsigned month, unsigned day, double _latitude, double _longitude, double _timezone, double times[])
+void AzanTime::get_prayer_times_t(unsigned year, unsigned month, unsigned day, double lat, double lon, double timez, double t[])
 {
-    latitude = _latitude;
-    longitude = _longitude;
-    timezone = _timezone;
-    julian_date = get_julian_date(year, month, day) -
-         longitude / static_cast<double>(15 * 24);
-    compute_day_times(times);
+    this->latitude = lat;
+    this->longitude = lon;
+    this->timezone = timez;
+    this->julian_date = get_julian_date(year, month, day) -
+                        this->longitude / static_cast<double>(15 * 24);
+    compute_day_times(t);
 }
 
 void AzanTime::get_prayer_times(time_t date, const double &latitude, const double &longitude, const double &timezone, double times[])
 {
     tm *t = localtime(&date);
-    get_prayer_times(static_cast<unsigned>(1900 + t->tm_year), static_cast<unsigned>(t->tm_mon + 1), static_cast<unsigned>(t->tm_mday), latitude, longitude, timezone, times);
+    get_prayer_times_t(static_cast<unsigned>(1900 + t->tm_year), static_cast<unsigned>(t->tm_mon + 1), static_cast<unsigned>(t->tm_mday), latitude, longitude, timezone, times);
 }
 
 void AzanTime::set_calc_method(const AzanTime::CalculationMethod &method_id)
