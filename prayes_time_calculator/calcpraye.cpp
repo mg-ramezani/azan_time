@@ -21,6 +21,11 @@ Azan::CalculateAzan::CalculateAzan(const std::string& name)
     set_new_cordinates(name);
 }
 
+void Azan::CalculateAzan::set_calculation_method(const AzanTime::CalculationMethod method)
+{
+    prayer_calculator.set_calc_method(method);
+}
+
 const vec_string& Azan::CalculateAzan::get_prayer_times()
 {
     ///TODO: Use std::vector instead of raw array
