@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 
-CONFIG += order
+CONFIG += ordered
 
 SUBDIRS += \
     prayes_time_calculator \

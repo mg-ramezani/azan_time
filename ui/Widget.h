@@ -52,23 +52,25 @@ private:
     inline void set_menus_to_tray_icon(void);
     inline void config_tray_icon(void);
     void load_all_settings(void);
-    inline void create_timer_connects(void);
+    inline void faraj_play_azan(void);
+    inline void dhuhr_play_azan(void);
+    inline void maghrib_play_azan(void);
 
 private:
-    Ui::azan_widget *ui;
+    Ui::azan_widget* ui;
     Azan::CalculateAzan khode_azon;
-    QMediaPlayer *player{nullptr};
+    QMediaPlayer* player{nullptr};
 
-    QTimer *first_timer;
-    QTimer *second_timer;
-    QTimer *third_timer;
+    QTimer* first_timer;
+    QTimer* second_timer;
+    QTimer* third_timer;
 
     QAction* action_minimize;
     QAction* action_maximize;
     QAction* action_mute;
     QAction* action_quite;
 
-    QSystemTrayIcon *tray_icon;
+    QSystemTrayIcon* tray_icon;
     QMenu* tray_menu;
 };
 #endif // WIDGET_H

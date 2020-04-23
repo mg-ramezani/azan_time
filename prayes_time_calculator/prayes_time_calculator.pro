@@ -5,11 +5,10 @@ CONFIG -= qt
 
 linux: DESTDIR = $$PWD/../build/ui
 
-win32
-{
-DESTDIR = $$PWD/../build_windows/ui
-DEFINES += _USE_MATH_DEFINES
-DEFINES += NOMINMAX
+win32{
+    DESTDIR = $$PWD/../build_windows/ui
+    DEFINES += _USE_MATH_DEFINES
+    DEFINES += NOMINMAX
 }
 
 QMAKE_POST_LINK += $$QMAKE_COPY $$quote($$PWD/calcpraye.h) $$quote($$PWD/../ui) $$escape_expand(\\n\\t)

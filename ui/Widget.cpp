@@ -41,8 +41,6 @@ azan_widget::azan_widget(QWidget* parent)
 
     init_name_of_state();
 
-    create_timer_connects();
-
     connect(player, &QMediaPlayer::mediaStatusChanged, this, [this](QMediaPlayer::MediaStatus status)
     {
         if(status == QMediaPlayer::MediaStatus::EndOfMedia)
@@ -118,28 +116,25 @@ void azan_widget::load_all_settings()
     on_pushButton_clicked();
 }
 
-void azan_widget::create_timer_connects()
+void azan_widget::faraj_play_azan()
 {
-    connect(first_timer, &QTimer::timeout, this, [this]()
-    {
-        ui->label_faraj->setStyleSheet("font-weight: bold; color: red");
+    ui->label_faraj->setStyleSheet("font-weight: bold; color: red");
 
-        play_azan();
-    });
+    play_azan();
+}
 
-    connect(second_timer, &QTimer::timeout, this, [this]()
-    {
-        ui->label_dhuhr->setStyleSheet("font-weight: bold; color: red");
+void azan_widget::dhuhr_play_azan()
+{
+    ui->label_dhuhr->setStyleSheet("font-weight: bold; color: red");
 
-        play_azan();
-    });
+    play_azan();
+}
 
-    connect(third_timer, &QTimer::timeout, this, [this]()
-    {
-        ui->label_maghrib->setStyleSheet("font-weight: bold; color: red");
+void azan_widget::maghrib_play_azan()
+{
+    ui->label_maghrib->setStyleSheet("font-weight: bold; color: red");
 
-        play_azan();
-    });
+    play_azan();
 }
 
 void azan_widget::closeEvent(QCloseEvent* event)
@@ -223,19 +218,19 @@ void azan_widget::check_for_praye_time()
     auto second_point{QTime::fromString(ui->label_dhuhr->text(), "HH:mm")};
     auto third_point{QTime::fromString(ui->label_maghrib->text(), "HH:mm")};
 
-    if (ui->checkBox_faraj->isChecked())
+    if (auto cf {current_time.secsTo(first_point)}; ui->checkBox_faraj->isChecked() && cf > 0)
     {
-        first_timer->start(std::abs(current_time.secsTo(first_point)) * 1000);
+        first_timer->singleShot(cf * 1000, this, &azan_widget::faraj_play_azan);
     }
 
-    if (ui->checkBox_dhuhr->isChecked())
+    if (auto cs {current_time.secsTo(second_point)}; ui->checkBox_dhuhr->isChecked() && cs > 0)
     {
-        second_timer->start(std::abs(current_time.secsTo(second_point)) * 1000);
+        second_timer->singleShot(cs * 1000, this, &azan_widget::dhuhr_play_azan);
     }
 
-    if (ui->checkBox_maghrib->isChecked())
+    if (auto ct {current_time.secsTo(third_point)}; ui->checkBox_maghrib->isChecked() && ct > 0)
     {
-        third_timer->start(std::abs(current_time.secsTo(third_point)) * 1000);
+        third_timer->singleShot(ct * 1000, this, &azan_widget::maghrib_play_azan);
     }
 }
 
