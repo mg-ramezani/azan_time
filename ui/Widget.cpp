@@ -65,20 +65,7 @@ azan_widget::azan_widget(QWidget* parent)
 
 azan_widget::~azan_widget()
 {
-    QSettings settings;
-    settings.setValue("default_cordinate", ui->groupBox_3->isChecked());
-    settings.setValue("default_cordinate_lat", ui->lineEdit_lat->text());
-    settings.setValue("default_cordinate_long", ui->lineEdit_2_long->text());
-    settings.setValue("default_azan_sound", ui->checkBox_default_sound->isChecked());
-    settings.setValue("user_azan_sound", player->media().request().url());
-    settings.setValue("azan_sound_value", ui->horizontalSlider_player_volume->value());
-    settings.setValue("play_faraj_azan", ui->checkBox_faraj->isChecked());
-    settings.setValue("play_dhuhr_azan", ui->checkBox_dhuhr->isChecked());
-    settings.setValue("play_maghrib_azan", ui->checkBox_maghrib->isChecked());
-    settings.setValue("state", ui->comboBox_state->currentIndex());
-    settings.setValue("city", ui->comboBox_city->currentIndex());
-    settings.setValue("enable_disable_tray_icon", ui->toolButton_enable_try_icon->isChecked());
-    settings.setValue("is_mute", action_mute->isChecked());
+    save_all_settings();
 
     delete ui;
 }
@@ -117,6 +104,24 @@ void azan_widget::load_all_settings()
 
     on_toolButton_enable_try_icon_clicked(ui->toolButton_enable_try_icon->isChecked());
     on_pushButton_clicked();
+}
+
+void azan_widget::save_all_settings()
+{
+    QSettings settings;
+    settings.setValue("default_cordinate", ui->groupBox_3->isChecked());
+    settings.setValue("default_cordinate_lat", ui->lineEdit_lat->text());
+    settings.setValue("default_cordinate_long", ui->lineEdit_2_long->text());
+    settings.setValue("default_azan_sound", ui->checkBox_default_sound->isChecked());
+    settings.setValue("user_azan_sound", player->media().request().url());
+    settings.setValue("azan_sound_value", ui->horizontalSlider_player_volume->value());
+    settings.setValue("play_faraj_azan", ui->checkBox_faraj->isChecked());
+    settings.setValue("play_dhuhr_azan", ui->checkBox_dhuhr->isChecked());
+    settings.setValue("play_maghrib_azan", ui->checkBox_maghrib->isChecked());
+    settings.setValue("state", ui->comboBox_state->currentIndex());
+    settings.setValue("city", ui->comboBox_city->currentIndex());
+    settings.setValue("enable_disable_tray_icon", ui->toolButton_enable_try_icon->isChecked());
+    settings.setValue("is_mute", action_mute->isChecked());
 }
 
 void azan_widget::faraj_play_azan()
@@ -365,6 +370,8 @@ void azan_widget::on_toolButton_reset_default_clicked()
     ui->checkBox_faraj->setChecked(true);
     ui->checkBox_dhuhr->setChecked(true);
     ui->checkBox_maghrib->setChecked(true);
+
+    save_all_settings();
 }
 
 void azan_widget::on_toolButton_enable_try_icon_clicked(bool checked)
