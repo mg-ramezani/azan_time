@@ -27,8 +27,12 @@ azan_widget::azan_widget(QWidget* parent)
     , action_maximize(new QAction("بزرگ‌نمایی", this))
     , action_mute(new QAction("بی‌صدا", this))
     , action_quite(new QAction("خروج", this))
+    , action_faraj_time(new QAction(this))
+    , action_dhuhr_time(new QAction(this))
+    , action_maghrib_time(new QAction(this))
     , tray_icon(new QSystemTrayIcon(this))
     , tray_menu(new QMenu(this))
+    , persian_number(QLocale::Language::Persian, QLocale::Country::Iran)
 {
     ui->setupUi(this);
 
@@ -208,6 +212,8 @@ inline void azan_widget::create_menus()
 {
     tray_menu->addActions({action_mute, action_minimize, action_maximize});
     tray_menu->addSeparator();
+    tray_menu->addActions({action_faraj_time, action_dhuhr_time, action_maghrib_time});
+    tray_menu->addSeparator();
     tray_menu->addAction(action_quite);
 }
 
@@ -288,12 +294,16 @@ void azan_widget::on_pushButton_clicked()
 {
     auto set_azan_time{
          [&, this](const auto& times) {
-#define s(x) QString::fromStdString(x)
+#define s(x) persian_number.toString(QTime::fromString(QString::fromStdString(x), "HH:mm"), "HH:mm")
              ui->label_faraj->setText(s(times.at(AzanTime::Fajr)));
              ui->label_sunrise->setText(s(times.at(AzanTime::Sunrise)));
              ui->label_dhuhr->setText(s(times.at(AzanTime::Dhuhr)));
              ui->label_sunset_3->setText(s(times.at(AzanTime::Sunset)));
              ui->label_maghrib->setText(s(times.at(AzanTime::Maghrib)));
+
+             action_faraj_time->setText("اذان صبح:   " + s(times.at(AzanTime::Fajr)));
+             action_dhuhr_time->setText("اذان ظهر:   " + s(times.at(AzanTime::Dhuhr)));
+             action_maghrib_time->setText("اذان مغرب:   " + s(times.at(AzanTime::Maghrib)));
 #undef s
              check_for_praye_time();
          }};

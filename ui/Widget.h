@@ -2,6 +2,7 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include <QLocale>
 
 #include "calcpraye.h"
 
@@ -72,7 +73,13 @@ private:
     QAction* action_mute;
     QAction* action_quite;
 
+    QAction* action_faraj_time;
+    QAction* action_dhuhr_time;
+    QAction* action_maghrib_time;
+
     QSystemTrayIcon* tray_icon;
     QMenu* tray_menu;
+
+    QLocale persian_number;
 };
 #endif // WIDGET_H
