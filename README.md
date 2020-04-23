@@ -7,7 +7,7 @@ Azan time calculation, besed on [this algorithm](http://praytimes.org/calculatio
 
 ## Dependency 
    - glibc (libprayer_time_calc dosn't work with musl)
-   - Qt5 (Widgets, Multimedia)
+   - Qt5.14.1 (Widgets, Multimedia)
   
 ## Build System
    - QMake 3.1
