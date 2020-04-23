@@ -31,60 +31,60 @@ void AzanTime::get_prayer_times_t(unsigned year, unsigned month, unsigned day, d
     compute_day_times(t);
 }
 
-void AzanTime::get_prayer_times(time_t date, const double &latitude, const double &longitude, const double &timezone, double times[])
+void AzanTime::get_prayer_times(time_t date, const double latitude, const double longitude, const double timezone, double times[])
 {
     tm *t = localtime(&date);
     get_prayer_times_t(static_cast<unsigned>(1900 + t->tm_year), static_cast<unsigned>(t->tm_mon + 1), static_cast<unsigned>(t->tm_mday), latitude, longitude, timezone, times);
 }
 
-void AzanTime::set_calc_method(const AzanTime::CalculationMethod &method_id)
+void AzanTime::set_calc_method(const AzanTime::CalculationMethod method_id)
 {
     calc_method = method_id;
 }
 
-void AzanTime::set_asr_method(const AzanTime::JuristicMethod &method_id)
+void AzanTime::set_asr_method(const AzanTime::JuristicMethod method_id)
 {
     asr_juristic = method_id;
 }
 
-void AzanTime::set_high_lats_adjust_method(const AzanTime::AdjustingMethod &method_id)
+void AzanTime::set_high_lats_adjust_method(const AzanTime::AdjustingMethod method_id)
 {
     adjust_high_lats = method_id;
 }
 
-void AzanTime::set_fajr_angle(const double &angle)
+void AzanTime::set_fajr_angle(const double angle)
 {
     method_params[Custom].fajr_angle = angle;
     calc_method = Custom;
 }
 
-void AzanTime::set_maghrib_angle(const double &angle)
+void AzanTime::set_maghrib_angle(const double angle)
 {
     method_params[Custom].maghrib_is_minutes = false;
     method_params[Custom].maghrib_value = angle;
     calc_method = Custom;
 }
 
-void AzanTime::set_isha_angle(const double &angle)
+void AzanTime::set_isha_angle(const double angle)
 {
     method_params[Custom].isha_is_minutes = false;
     method_params[Custom].isha_value = angle;
     calc_method = Custom;
 }
 
-void AzanTime::set_dhuhr_minutes(const double &minutes)
+void AzanTime::set_dhuhr_minutes(const double minutes)
 {
     dhuhr_minutes = minutes;
 }
 
-void AzanTime::set_maghrib_minutes(const double &minutes)
+void AzanTime::set_maghrib_minutes(const double minutes)
 {
     method_params[Custom].maghrib_is_minutes = true;
     method_params[Custom].maghrib_value = minutes;
     calc_method = Custom;
 }
 
-void AzanTime::set_isha_minutes(const double &minutes)
+void AzanTime::set_isha_minutes(const double minutes)
 {
     method_params[Custom].isha_is_minutes = true;
     method_params[Custom].isha_value = minutes;
@@ -136,7 +136,7 @@ double AzanTime::get_effective_timezone(time_t local_time)
     return (local - gmt) / 3600.0;
 }
 
-double AzanTime::get_effective_timezone(const int &year, const int &month, const int &day)
+double AzanTime::get_effective_timezone(const int year, const int month, const int day)
 {
     tm date{};
     date.tm_year = year - 1900;
@@ -166,23 +166,23 @@ AzanTime::DoublePair AzanTime::sun_position(double jd)
     return DoublePair(dd, eq_t);
 }
 
-double AzanTime::equation_of_time(const double &jd)
+double AzanTime::equation_of_time(const double jd)
 {
     return sun_position(jd).second;
 }
 
-double AzanTime::sun_declination(const double &jd)
+double AzanTime::sun_declination(const double jd)
 {
     return sun_position(jd).first;
 }
 
-double AzanTime::compute_mid_day(const double &_t)
+double AzanTime::compute_mid_day(const double _t)
 {
     double t = equation_of_time(julian_date + _t);
     return fix_hour(12 - t);
 }
 
-double AzanTime::compute_time(const double &g, const double &t)
+double AzanTime::compute_time(const double g, const double t)
 {
     double d = sun_declination(julian_date + t);
     double z = compute_mid_day(t);
@@ -192,7 +192,7 @@ double AzanTime::compute_time(const double &g, const double &t)
     return (z + (g > 90.0 ? -v : v));
 }
 
-double AzanTime::compute_asr(const int &step, const double &t) // Shafii: step=1, Hanafi: step=2
+double AzanTime::compute_asr(const int step, const double t) // Shafii: step=1, Hanafi: step=2
 {
     double d = sun_declination(julian_date + t);
     double g = -darccot(step + dtan(fabs(latitude - d)));
@@ -305,12 +305,12 @@ void AzanTime::day_portion(double times[])
         times[i] /= 24.0;
 }
 
-double AzanTime::time_diff(const double &time1, const double &time2)
+double AzanTime::time_diff(const double time1, const double time2)
 {
     return fix_hour(time2 - time1);
 }
 
-std::string AzanTime::int_to_string(const int &num)
+std::string AzanTime::int_to_string(const int num)
 {
     char tmp[16];
     tmp[0] = '\0';
@@ -318,7 +318,7 @@ std::string AzanTime::int_to_string(const int &num)
     return std::string(tmp);
 }
 
-std::string AzanTime::two_digits_format(const int &num)
+std::string AzanTime::two_digits_format(const int num)
 {
     char tmp[16];
     tmp[0] = '\0';
@@ -341,7 +341,7 @@ double AzanTime::get_julian_date(unsigned &year, unsigned &month, unsigned &day)
          floor(30.6001 * (month + 1)) + day + b - 1524.5);
 }
 
-double AzanTime::calc_julian_date(const int &year, const int &month, const int &day)
+double AzanTime::calc_julian_date(const int year, const int month, const int day)
 {
     constexpr double j1970 = 2440588.0;
     tm date{};
@@ -356,52 +356,52 @@ double AzanTime::calc_julian_date(const int &year, const int &month, const int &
     return j1970 + days - 0.5;
 }
 
-double AzanTime::dsin(const double &d)
+double AzanTime::dsin(const double d)
 {
     return sin(deg2rad(d));
 }
 
-double AzanTime::dcos(const double &d)
+double AzanTime::dcos(const double d)
 {
     return cos(deg2rad(d));
 }
 
-double AzanTime::dtan(const double &d)
+double AzanTime::dtan(const double d)
 {
     return tan(deg2rad(d));
 }
 
-double AzanTime::darcsin(const double &x)
+double AzanTime::darcsin(const double x)
 {
     return rad2deg(asin(x));
 }
 
-double AzanTime::darccos(const double &x)
+double AzanTime::darccos(const double x)
 {
     return rad2deg(acos(x));
 }
 
-double AzanTime::darctan(const double &x)
+double AzanTime::darctan(const double x)
 {
     return rad2deg(atan(x));
 }
 
-double AzanTime::darctan2(const double &y, const double &x)
+double AzanTime::darctan2(const double y, const double x)
 {
     return rad2deg(atan2(y, x));
 }
 
-double AzanTime::darccot(const double &x)
+double AzanTime::darccot(const double x)
 {
     return rad2deg(atan(1.0 / x));
 }
 
-constexpr double AzanTime::deg2rad(const double &d)
+constexpr double AzanTime::deg2rad(const double d)
 {
     return d * M_PI / 180.0;
 }
 
-constexpr double AzanTime::rad2deg(const double &r)
+constexpr double AzanTime::rad2deg(const double r)
 {
     return r * 180.0 / M_PI;
 }

@@ -65,40 +65,40 @@ public:
     AzanTime(CalculationMethod __calc_method = Jafari,
          JuristicMethod __asr_juristic = Shafii,
          AdjustingMethod __adjust_high_lats = MidNight,
-         double __dhuhr_minutes = double());
+             double __dhuhr_minutes = {});
 
     /* return prayer times for a given date */
     void get_prayer_times_t(unsigned year, unsigned month, unsigned day, double lat, double lon, double timez, double t[]);
 
     /* return prayer times for a given date */
-    void get_prayer_times(time_t date, const double& latitude, const double& longitude, const double& timezone, double times[]);
+    void get_prayer_times(time_t date, const double latitude, const double longitude, const double timezone, double times[]);
 
     /* set the calculation method  */
-    void set_calc_method(const CalculationMethod& method_id);
+    void set_calc_method(const CalculationMethod method_id);
 
 	/* set the juristic method for Asr */
-    void set_asr_method(const JuristicMethod& method_id);
+    void set_asr_method(const JuristicMethod method_id);
 
 	/* set adjusting method for higher latitudes */
-    void set_high_lats_adjust_method(const AdjustingMethod& method_id);
+    void set_high_lats_adjust_method(const AdjustingMethod method_id);
 
 	/* set the angle for calculating Fajr */
-    void set_fajr_angle(const double& angle);
+    void set_fajr_angle(const double angle);
 
 	/* set the angle for calculating Maghrib */
-    void set_maghrib_angle(const double& angle);
+    void set_maghrib_angle(const double angle);
 
 	/* set the angle for calculating Isha */
-    void set_isha_angle(const double& angle);
+    void set_isha_angle(const double angle);
 
 	/* set the minutes after mid-day for calculating Dhuhr */
-    void set_dhuhr_minutes(const double& minutes);
+    void set_dhuhr_minutes(const double minutes);
 
 	/* set the minutes after Sunset for calculating Maghrib */
-    void set_maghrib_minutes(const double& minutes);
+    void set_maghrib_minutes(const double minutes);
 
 	/* set the minutes after Maghrib for calculating Isha */
-    void set_isha_minutes(const double& minutes);
+    void set_isha_minutes(const double minutes);
 
 	/* get hours and minutes parts of a float time */
     static void get_float_time_parts(double time, int& hours, int& minutes);
@@ -118,9 +118,7 @@ public:
     static double get_effective_timezone(time_t local_time);
 
 	/* compute local time-zone for a specific date */
-    static double get_effective_timezone(const int& year,
-         const int& month,
-         const int& day);
+    static double get_effective_timezone(const int year, const int month, const int day);
 
 private:
     /* ------------------- Calc Method Parameters -------------------- */
@@ -153,19 +151,19 @@ private:
     DoublePair sun_position(double jd);
 
 	/* compute equation of time */
-    double equation_of_time(const double& jd);
+    double equation_of_time(const double jd);
 
 	/* compute declination angle of sun */
-    double sun_declination(const double& jd);
+    double sun_declination(const double jd);
 
 	/* compute mid-day (Dhuhr, Zawal) time */
-    double compute_mid_day(const double& _t);
+    double compute_mid_day(const double _t);
 
 	/* compute time for a given angle G */
-    double compute_time(const double& g, const double& t);
+    double compute_time(const double g, const double t);
 
 	/* compute the time of Asr */
-    double compute_asr(const int& step, const double& t);
+    double compute_asr(const int step, const double t);
 
     /* ---------------------- Compute Prayer Times ----------------------- */
 
@@ -192,12 +190,12 @@ private:
     /* ---------------------- Misc Functions ----------------------- */
 
 	/* compute the difference between two times  */
-    static double time_diff(const double& time1, const double& time2);
+    static double time_diff(const double time1, const double time2);
 
-    static std::string int_to_string(const int& num);
+    static std::string int_to_string(const int num);
 
 	/* add a leading 0 if necessary */
-    static std::string two_digits_format(const int& num);
+    static std::string two_digits_format(const int num);
 
     /* ---------------------- Julian Date Functions ----------------------- */
 
@@ -205,39 +203,39 @@ private:
     double get_julian_date(unsigned& year, unsigned& month, unsigned& day);
 
 	/* convert a calendar date to julian date (second method) */
-    double calc_julian_date(const int& year, const int& month, const int& day);
+    double calc_julian_date(const int year, const int month, const int day);
 
     /* ---------------------- Trigonometric Functions ----------------------- */
 
 	/* degree sin */
-    static double dsin(const double& d);
+    static double dsin(const double d);
 
 	/* degree cos */
-    static double dcos(const double& d);
+    static double dcos(const double d);
 
 	/* degree tan */
-    static double dtan(const double& d);
+    static double dtan(const double d);
 
 	/* degree arcsin */
-    static double darcsin(const double& x);
+    static double darcsin(const double x);
 
 	/* degree arccos */
-    static double darccos(const double& x);
+    static double darccos(const double x);
 
 	/* degree arctan */
-    static double darctan(const double& x);
+    static double darctan(const double x);
 
 	/* degree arctan2 */
-    static double darctan2(const double& y, const double& x);
+    static double darctan2(const double y, const double x);
 
 	/* degree arccot */
-    static double darccot(const double& x);
+    static double darccot(const double x);
 
 	/* degree to radian */
-    static constexpr double deg2rad(const double& d);
+    static constexpr double deg2rad(const double d);
 
 	/* radian to degree */
-    static constexpr double rad2deg(const double& r);
+    static constexpr double rad2deg(const double r);
 
 	/* range reduce angle in degrees. */
     static double fix_angle(double a);

@@ -226,6 +226,9 @@ void azan_widget::check_for_praye_time()
     auto second_point{QTime::fromString(ui->label_dhuhr->text(), "HH:mm")};
     auto third_point{QTime::fromString(ui->label_maghrib->text(), "HH:mm")};
 
+
+    ///FIXME: get a c++17 compatible compilere on stupied windows.
+#if __cplusplus==201703
     if (auto cf {current_time.secsTo(first_point)}; ui->checkBox_faraj->isChecked() && cf > 0)
     {
         first_timer->singleShot(cf * 1000, this, &azan_widget::faraj_play_azan);
@@ -240,6 +243,25 @@ void azan_widget::check_for_praye_time()
     {
         third_timer->singleShot(ct * 1000, this, &azan_widget::maghrib_play_azan);
     }
+#else
+    auto cf {current_time.secsTo(first_point)};
+    if ( ui->checkBox_faraj->isChecked() && cf > 0)
+    {
+        first_timer->singleShot(cf * 1000, this, &azan_widget::faraj_play_azan);
+    }
+
+    auto cs {current_time.secsTo(second_point)};
+    if ( ui->checkBox_dhuhr->isChecked() && cs > 0)
+    {
+        second_timer->singleShot(cs * 1000, this, &azan_widget::dhuhr_play_azan);
+    }
+
+    auto ct {current_time.secsTo(third_point)};
+    if (ui->checkBox_maghrib->isChecked() && ct > 0)
+    {
+        third_timer->singleShot(ct * 1000, this, &azan_widget::maghrib_play_azan);
+    }
+#endif
 }
 
 void azan_widget::on_comboBox_state_currentIndexChanged(const QString& arg1)
