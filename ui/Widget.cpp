@@ -78,6 +78,7 @@ azan_widget::~azan_widget()
     settings.setValue("state", ui->comboBox_state->currentIndex());
     settings.setValue("city", ui->comboBox_city->currentIndex());
     settings.setValue("enable_disable_tray_icon", ui->toolButton_enable_try_icon->isChecked());
+    settings.setValue("is_mute", action_mute->isChecked());
 
     delete ui;
 }
@@ -111,6 +112,8 @@ void azan_widget::load_all_settings()
     ui->comboBox_city->setCurrentIndex(settings.value("city").toInt());
 
     ui->toolButton_enable_try_icon->setChecked(settings.value("enable_disable_tray_icon").toBool());
+
+    action_mute->setChecked(settings.value("is_mute").toBool());
 
     on_toolButton_enable_try_icon_clicked(ui->toolButton_enable_try_icon->isChecked());
     on_pushButton_clicked();
