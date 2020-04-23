@@ -172,11 +172,12 @@ void azan_widget::init_name_of_state()
     const auto& list{khode_azon.get_availabel_cordinate()};
 
     std::string last_state;
+    QStringList ui_list;
     for (size_t i{}; i < arr_lenght; ++i)
     {
         if (!list.at(i).at(0).empty() && list.at(i).at(0) != last_state)
         {
-            ui->comboBox_state->addItem(QString::fromStdString(list.at(i).at(0)));
+            ui_list << QString::fromStdString(list.at(i).at(0));
             last_state = list.at(i).at(0);
         }
         else
@@ -184,6 +185,7 @@ void azan_widget::init_name_of_state()
             last_state = list.at(i).at(0);
         }
     }
+    ui->comboBox_state->addItems(ui_list);
     ui->comboBox_state->addItem("شهرهای دیگر");
 }
 
@@ -294,14 +296,16 @@ void azan_widget::on_comboBox_state_currentIndexChanged(const QString& arg1)
     const auto& list{khode_azon.get_availabel_cordinate()};
 
     const auto arr_length{khode_azon.get_length_of_availabel_cordinate()};
+    QStringList ui_list;
     for (size_t i{}; i < arr_length; ++i)
     {
         if (list.at(i).at(0) == arg1.toStdString() ||
              (arg1 == "شهرهای دیگر" && list.at(i).at(0).empty()))
         {
-            ui->comboBox_city->addItem(QString::fromStdString(list.at(i).at(1)));
+            ui_list << QString::fromStdString(list.at(i).at(1));
         }
     }
+    ui->comboBox_city->addItems(ui_list);
 }
 
 void azan_widget::on_pushButton_clicked()
