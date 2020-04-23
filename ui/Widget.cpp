@@ -220,6 +220,20 @@ inline void azan_widget::create_menus()
 inline void azan_widget::set_menus_to_tray_icon()
 {
     tray_icon->setContextMenu(tray_menu);
+
+    connect(tray_icon, &QSystemTrayIcon::activated, this, [this](QSystemTrayIcon::ActivationReason reason)
+    {
+       if(reason == QSystemTrayIcon::ActivationReason::DoubleClick
+               && isHidden())
+       {
+           showNormal();
+       }
+       else if(reason == QSystemTrayIcon::ActivationReason::DoubleClick
+               && !isHidden())
+       {
+           hide();
+       }
+    });
 }
 
 void azan_widget::config_tray_icon()
