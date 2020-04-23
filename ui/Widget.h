@@ -39,6 +39,7 @@ private slots:
     void on_toolButton_reset_default_clicked();
     void on_toolButton_enable_try_icon_clicked(bool checked);
     void on_horizontalSlider_player_volume_valueChanged(int value);
+    void on_comboBox_calc_method_currentIndexChanged(int index);
 
 private:
     void init_name_of_state(void);

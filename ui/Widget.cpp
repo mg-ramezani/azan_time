@@ -102,6 +102,8 @@ void azan_widget::load_all_settings()
 
     action_mute->setChecked(settings.value("is_mute").toBool());
 
+    ui->comboBox_calc_method->setCurrentIndex(settings.value("calc_method").toInt());
+
     on_toolButton_enable_try_icon_clicked(ui->toolButton_enable_try_icon->isChecked());
     on_pushButton_clicked();
 }
@@ -122,6 +124,7 @@ void azan_widget::save_all_settings()
     settings.setValue("city", ui->comboBox_city->currentIndex());
     settings.setValue("enable_disable_tray_icon", ui->toolButton_enable_try_icon->isChecked());
     settings.setValue("is_mute", action_mute->isChecked());
+    settings.setValue("calc_method", ui->comboBox_calc_method->currentIndex());
 }
 
 void azan_widget::faraj_play_azan()
@@ -404,4 +407,9 @@ void azan_widget::on_toolButton_enable_try_icon_clicked(bool checked)
 void azan_widget::on_horizontalSlider_player_volume_valueChanged(int value)
 {
     player->setVolume(value);
+}
+
+void azan_widget::on_comboBox_calc_method_currentIndexChanged(int index)
+{
+    khode_azon.set_calculation_method(AzanTime::CalculationMethod(index));
 }

@@ -53,6 +53,8 @@ public:
     explicit CalculateAzan(double lat, double lon);
     CalculateAzan(const std::string& name);
 
+    void set_calculation_method(const AzanTime::CalculationMethod method);
+
     const vec_string& get_prayer_times(void);
     void print_available_cordinate(void);
     const vec_strings& get_availabel_cordinate(void) const;
