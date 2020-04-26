@@ -247,28 +247,12 @@ void azan_widget::check_for_praye_time()
 {
     auto current_time{QTime::currentTime()};
 
-    auto first_point{QTime::fromString(ui->label_faraj->text(), "HH:mm")};
-    auto second_point{QTime::fromString(ui->label_dhuhr->text(), "HH:mm")};
-    auto third_point{QTime::fromString(ui->label_maghrib->text(), "HH:mm")};
+#define s(x) QTime::fromString(QString::fromStdString(prayer_times.at(x)), "HH:mm")
+    auto first_point{s(AzanTime::Fajr)};
+    auto second_point{s(AzanTime::Dhuhr)};
+    auto third_point{s(AzanTime::Maghrib)};
+#undef s
 
-
-    ///FIXME: get a c++17 compatible compilere on stupied windows.
-#if __cplusplus==201703
-    if (auto cf {current_time.secsTo(first_point)}; ui->checkBox_faraj->isChecked() && cf > 0)
-    {
-        first_timer->singleShot(cf * 1000, this, &azan_widget::faraj_play_azan);
-    }
-
-    if (auto cs {current_time.secsTo(second_point)}; ui->checkBox_dhuhr->isChecked() && cs > 0)
-    {
-        second_timer->singleShot(cs * 1000, this, &azan_widget::dhuhr_play_azan);
-    }
-
-    if (auto ct {current_time.secsTo(third_point)}; ui->checkBox_maghrib->isChecked() && ct > 0)
-    {
-        third_timer->singleShot(ct * 1000, this, &azan_widget::maghrib_play_azan);
-    }
-#else
     auto cf {current_time.secsTo(first_point)};
     if ( ui->checkBox_faraj->isChecked() && cf > 0)
     {
@@ -286,7 +270,6 @@ void azan_widget::check_for_praye_time()
     {
         third_timer->singleShot(ct * 1000, this, &azan_widget::maghrib_play_azan);
     }
-#endif
 }
 
 void azan_widget::on_comboBox_state_currentIndexChanged(const QString& arg1)
@@ -332,7 +315,7 @@ void azan_widget::on_pushButton_clicked()
              ui->lineEdit_2_long->text().toDouble())};
 
         khode_azon.set_new_cordinates(cordinate);
-        const auto prayer_times{khode_azon.get_prayer_times()};
+        prayer_times = std::move(khode_azon.get_prayer_times());
         set_azan_time(prayer_times);
     }
     else
@@ -348,7 +331,7 @@ void azan_widget::on_pushButton_clicked()
             if (state_city == t)
             {
                 khode_azon.set_new_cordinates(t);
-                const auto prayer_times{khode_azon.get_prayer_times()};
+                prayer_times = std::move(khode_azon.get_prayer_times());
 
                 set_azan_time(prayer_times);
                 break;

@@ -81,5 +81,7 @@ private:
     QMenu* tray_menu;
 
     QLocale persian_number;
+
+    vec_string prayer_times;
 };
 #endif // WIDGET_H
