@@ -4,6 +4,7 @@
 #include <string>
 
 #include <QSystemTrayIcon>
+#include <QWidgetAction>
 #include <QMediaPlayer>
 #include <QMessageBox>
 #include <QFileDialog>
@@ -11,10 +12,13 @@
 #include <QDateTime>
 #include <QSettings>
 #include <QAction>
+#include <QSlider>
 #include <QTimer>
 #include <QMenu>
 #include <QTime>
 #include <QUrl>
+
+#include "widgets/slider_action.h"
 
 azan_widget::azan_widget(QWidget* parent)
     : QWidget(parent)
@@ -30,6 +34,7 @@ azan_widget::azan_widget(QWidget* parent)
     , action_faraj_time(new QAction(this))
     , action_dhuhr_time(new QAction(this))
     , action_maghrib_time(new QAction(this))
+    , slider(new slider_action)
     , tray_icon(new QSystemTrayIcon(this))
     , tray_menu(new QMenu(this))
     , persian_number(QLocale::Language::Persian, QLocale::Country::Iran)
@@ -94,6 +99,7 @@ void azan_widget::load_all_settings()
     }
 
     ui->horizontalSlider_player_volume->setValue(settings.value("azan_sound_value").toInt());
+    slider->get_slider()->setValue(settings.value("azan_sound_value").toInt());
     player->setVolume(settings.value("azan_sound_value").toInt());
     ui->checkBox_faraj->setChecked(settings.value("play_faraj_azan").toBool());
     ui->checkBox_dhuhr->setChecked(settings.value("play_dhuhr_azan").toBool());
@@ -207,6 +213,10 @@ inline void azan_widget::create_actions_connects()
     connect(action_minimize, &QAction::triggered, this, &QWidget::hide);
     connect(action_maximize, &QAction::triggered, this, &QWidget::showNormal);
     connect(action_mute, &QAction::triggered, this, [&, this](bool check){(check) ? player->setVolume(0) : player->setVolume(100);});
+    connect(slider->get_slider(), &QSlider::valueChanged, this, [this](auto i)
+    {
+       ui->horizontalSlider_player_volume->setValue(i);
+    });
     connect(action_quite, &QAction::triggered, this, &QCoreApplication::quit);
 }
 
@@ -215,6 +225,8 @@ inline void azan_widget::create_menus()
     tray_menu->addActions({action_mute, action_minimize, action_maximize});
     tray_menu->addSeparator();
     tray_menu->addActions({action_faraj_time, action_dhuhr_time, action_maghrib_time});
+    tray_menu->addSeparator();
+    tray_menu->addAction(slider);
     tray_menu->addSeparator();
     tray_menu->addAction(action_quite);
 }

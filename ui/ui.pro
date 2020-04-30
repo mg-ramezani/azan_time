@@ -17,14 +17,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    Widget.cpp
+    Widget.cpp \
+    widgets/slider_action.cpp
 
 HEADERS += \
     Widget.h \
     calcpraye.h \
     types.h \
     prayes_calculator.h \
-    noncopyable.hpp
+    noncopyable.hpp \
+    widgets/slider_action.h
 
 
 FORMS += \

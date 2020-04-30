@@ -7,8 +7,11 @@
 #include "calcpraye.h"
 
 class QSystemTrayIcon;
+class slider_action;
+class QWidgetAction;
 class QMediaPlayer;
 class QAction;
+class QSlider;
 class QTimer;
 class QMenu;
 
@@ -76,6 +79,8 @@ private:
     QAction* action_faraj_time;
     QAction* action_dhuhr_time;
     QAction* action_maghrib_time;
+
+    slider_action* slider;
 
     QSystemTrayIcon* tray_icon;
     QMenu* tray_menu;
