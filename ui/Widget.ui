@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>521</width>
-    <height>333</height>
+    <height>365</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -248,24 +248,10 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_7">
         <item>
-         <widget class="QToolButton" name="toolButton_reset_default">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="text">
-           <string>...</string>
-          </property>
-          <property name="icon">
-           <iconset resource="resource.qrc">
-            <normaloff>:/icon/reset.png</normaloff>:/icon/reset.png</iconset>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QToolButton" name="toolButton_enable_try_icon">
+          <property name="toolTip">
+           <string>فعال‌سازی حالت اجرا در پس‌زمینه.</string>
+          </property>
           <property name="text">
            <string>...</string>
           </property>

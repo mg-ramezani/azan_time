@@ -385,43 +385,6 @@ void azan_widget::on_toolButton_sournd_test_clicked(bool checked)
     }
 }
 
-void azan_widget::on_toolButton_reset_default_clicked()
-{
-    constexpr auto title{"تأییدیه"};
-    constexpr auto text{"آیا واقعاً مطمئن هستید که می‌خواید تنظیمات پیش‌فرض رابرگردانید ؟"};
-    const auto result {QMessageBox::question(this, title, text)};
-
-    if(result == QMessageBox::No)
-    {
-        return;
-    }
-
-    ui->label_faraj->clear();
-    ui->label_sunrise->clear();
-    ui->label_dhuhr->clear();
-    ui->label_sunset_3->clear();
-    ui->label_maghrib->clear();
-
-    ui->comboBox_city->setCurrentIndex(0);
-    ui->comboBox_state->setCurrentIndex(0);
-    ui->comboBox_city->setEnabled(true);
-    ui->comboBox_state->setEnabled(true);
-
-    ui->groupBox_3->setChecked(false);
-    ui->lineEdit_lat->clear();
-    ui->lineEdit_2_long->clear();
-
-    ui->checkBox_default_sound->setChecked(true);
-    player->setMedia(QUrl("qrc:/sounds/azan/rahim_moazenzadeh.mp3"));
-    ui->horizontalSlider_player_volume->setValue(100);
-
-    ui->checkBox_faraj->setChecked(true);
-    ui->checkBox_dhuhr->setChecked(true);
-    ui->checkBox_maghrib->setChecked(true);
-
-    save_all_settings();
-}
-
 void azan_widget::on_toolButton_enable_try_icon_clicked(bool checked)
 {
     tray_icon->setVisible(checked);
