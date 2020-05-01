@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/sounds/azan">
-        <file>58-naghshbandi.mp3</file>
+        <file>rahim_moazenzadeh.mp3</file>
     </qresource>
     <qresource prefix="/icon">
         <file>icon[pngwing.com].png</file>

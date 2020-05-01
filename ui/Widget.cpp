@@ -44,7 +44,7 @@ azan_widget::azan_widget(QWidget* parent)
     QCoreApplication::setOrganizationName("Ghasem");
     QCoreApplication::setOrganizationDomain("ghasem.org");
     QCoreApplication::setApplicationName("Azan");
-    QCoreApplication::setApplicationVersion("v0.5");
+    QCoreApplication::setApplicationVersion("v0.6.1");
 
     setWindowTitle("Azan-" + QCoreApplication::applicationVersion());
 
@@ -202,7 +202,7 @@ void azan_widget::play_azan()
 
 void azan_widget::set_default_voice()
 {
-    player->setMedia(QUrl("qrc:/sounds/azan/58-naghshbandi.mp3"));
+    player->setMedia(QUrl("qrc:/sounds/azan/rahim_moazenzadeh.mp3"));
 }
 
 inline void azan_widget::create_actions_connects()
@@ -412,7 +412,7 @@ void azan_widget::on_toolButton_reset_default_clicked()
     ui->lineEdit_2_long->clear();
 
     ui->checkBox_default_sound->setChecked(true);
-    player->setMedia(QUrl("qrc:/sounds/azan/58-naghshbandi.mp3"));
+    player->setMedia(QUrl("qrc:/sounds/azan/rahim_moazenzadeh.mp3"));
     ui->horizontalSlider_player_volume->setValue(100);
 
     ui->checkBox_faraj->setChecked(true);
@@ -430,6 +430,7 @@ void azan_widget::on_toolButton_enable_try_icon_clicked(bool checked)
 void azan_widget::on_horizontalSlider_player_volume_valueChanged(int value)
 {
     player->setVolume(value);
+    slider->get_slider()->setValue(value);
 }
 
 void azan_widget::on_comboBox_calc_method_currentIndexChanged(int index)
