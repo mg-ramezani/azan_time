@@ -7,4 +7,9 @@
         <file>reset.png</file>
         <file>enable_disable_tray_icon.png</file>
     </qresource>
+    <qresource prefix="/fonts">
+        <file>fonts/Parastoo-FD-WOL.ttf</file>
+        <file>fonts/Sahel-Black-FD-WOL.ttf</file>
+        <file>fonts/Parastoo-Bold-FD-WOL.ttf</file>
+    </qresource>
 </RCC>

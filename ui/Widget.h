@@ -57,6 +57,7 @@ private:
     inline void config_tray_icon(void);
     void load_all_settings(void);
     void save_all_settings(void);
+    void config_fonts(void);
     inline void faraj_play_azan(void);
     inline void dhuhr_play_azan(void);
     inline void maghrib_play_azan(void);

@@ -5,6 +5,7 @@
 
 #include <QSystemTrayIcon>
 #include <QWidgetAction>
+#include <QFontDatabase>
 #include <QMediaPlayer>
 #include <QMessageBox>
 #include <QFileDialog>
@@ -61,6 +62,8 @@ azan_widget::azan_widget(QWidget* parent)
             ui->label_maghrib->setStyleSheet("");
         }
     });
+
+    config_fonts();
 
     set_default_voice();
 
@@ -135,6 +138,65 @@ void azan_widget::save_all_settings()
     settings.setValue("enable_disable_tray_icon", ui->toolButton_enable_try_icon->isChecked());
     settings.setValue("is_mute", action_mute->isChecked());
     settings.setValue("calc_method", ui->comboBox_calc_method->currentIndex());
+}
+
+void azan_widget::config_fonts()
+{
+    auto i {QFontDatabase::addApplicationFont(":/fonts/fonts/Sahel-Black-FD-WOL.ttf")};
+    QFont sahel_black_family {QFontDatabase::applicationFontFamilies(i).at(0)};
+    sahel_black_family.setFamily("Sahel Black FD-WOL");
+
+    i = QFontDatabase::addApplicationFont(":/fonts/fonts/Parastoo-FD-WOL.ttf");
+    QFont parastoo_family {QFontDatabase::applicationFontFamilies(i).at(0)};
+
+    i = QFontDatabase::addApplicationFont(":/fonts/fonts/Parastoo-Bold-FD-WOL.ttf");
+    QFont parastoo_bold_family {QFontDatabase::applicationFontFamilies(i).at(0)};
+    parastoo_bold_family.setBold(true);
+
+    ui->groupBox->setFont(sahel_black_family);
+
+    ui->label->setFont(parastoo_family);
+    ui->label_2->setFont(parastoo_family);
+    ui->label_3->setFont(parastoo_family);
+    ui->label_4->setFont(parastoo_family);
+    ui->label_5->setFont(parastoo_family);
+    ui->label_6->setFont(parastoo_family);
+    ui->label_7->setFont(parastoo_family);
+
+    ui->label_faraj->setFont(parastoo_bold_family);
+    ui->label_sunrise->setFont(parastoo_bold_family);
+    ui->label_dhuhr->setFont(parastoo_bold_family);
+    ui->label_sunset_3->setFont(parastoo_bold_family);
+    ui->label_maghrib->setFont(parastoo_bold_family);
+    ui->comboBox_state->setFont(parastoo_bold_family);
+    ui->comboBox_city->setFont(parastoo_bold_family);
+    ui->pushButton->setFont(parastoo_bold_family);
+
+    ui->groupBox_2->setFont(sahel_black_family);
+    ui->label_8->setFont(QFont("Serif"));
+    ui->label_9->setFont(QFont("Serif"));
+    ui->lineEdit_lat->setFont(QFont("Monospace"));
+    ui->lineEdit_2_long->setFont(QFont("Monospace"));
+
+    ui->label_10->setFont(parastoo_family);
+    ui->comboBox_calc_method->setFont(QFont("Serif"));
+
+    ui->checkBox_faraj->setFont(parastoo_family);
+    ui->checkBox_dhuhr->setFont(parastoo_family);
+    ui->checkBox_maghrib->setFont(parastoo_family);
+    ui->checkBox_default_sound->setFont(parastoo_family);
+    ui->pushButton_select_sound->setFont(parastoo_bold_family);
+
+    action_mute->setFont(parastoo_family);
+    action_minimize->setFont(parastoo_family);
+    action_maximize->setFont(parastoo_family);
+
+    action_faraj_time->setFont(parastoo_bold_family);
+    action_dhuhr_time->setFont(parastoo_bold_family);
+    action_maghrib_time->setFont(parastoo_bold_family);
+
+    action_quite->setFont(parastoo_family);
+
 }
 
 void azan_widget::faraj_play_azan()
