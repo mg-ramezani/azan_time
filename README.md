@@ -3,7 +3,7 @@
 Azan time calculation, besed on [this algorithm](http://praytimes.org/calculation) and [this](http://praytimes.org/manual#Downloads_and_Examples) library.
 
 ## Screenshot
-![right pic](./2020-05-02_00-30.png) ![left one](./2020-05-02_00-29.png)
+![right pic](./2020-05-02_06-21_2.png) ![left one](./2020-05-02_06-21_1.png)
 
 ## Dependency 
    - glibc (libprayer_time_calc dosn't work with musl)

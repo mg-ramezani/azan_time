@@ -45,7 +45,7 @@ azan_widget::azan_widget(QWidget* parent)
     QCoreApplication::setOrganizationName("Ghasem");
     QCoreApplication::setOrganizationDomain("ghasem.org");
     QCoreApplication::setApplicationName("Azan");
-    QCoreApplication::setApplicationVersion("v0.6.1");
+    QCoreApplication::setApplicationVersion("v0.7");
 
     setWindowTitle("Azan-" + QCoreApplication::applicationVersion());
 
